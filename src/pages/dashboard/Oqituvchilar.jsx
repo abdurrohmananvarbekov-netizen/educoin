@@ -358,9 +358,9 @@ export default function Oqituvchilar() {
             </div>
 
       {/* Add Teacher Drawer */}
-      <div className={`fixed inset-0 z-50 flex justify-end transition-opacity duration-300 ${isAddTeacherOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`fixed inset-0 z-[1000] flex justify-end transition-opacity duration-300 ${isAddTeacherOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         {/* Backdrop */}
-        <div className="absolute inset-0 bg-black/20" onClick={() => setIsAddTeacherOpen(false)} />
+        <div className="absolute inset-0 bg-black/30 transition-opacity duration-300" onClick={() => setIsAddTeacherOpen(false)} />
         
         {/* Drawer Panel */}
         <div className={`relative w-[400px] max-w-full bg-white h-full shadow-2xl flex flex-col transition-transform duration-300 ${isAddTeacherOpen ? 'translate-x-0' : 'translate-x-full'}`}>

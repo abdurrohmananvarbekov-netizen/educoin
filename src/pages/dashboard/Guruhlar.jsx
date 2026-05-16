@@ -351,7 +351,7 @@ export default function Guruhlar() {
         }`}
       >
         <div 
-          className="absolute inset-0 bg-black/40 transition-opacity duration-300" 
+          className="absolute inset-0 bg-black/30 transition-opacity duration-300" 
           onClick={handleCloseDrawer}
         />
         <div 

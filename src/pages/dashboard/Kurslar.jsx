@@ -117,6 +117,8 @@ export default function Kurslar({ setActiveMenu }) {
                 setActiveTab(tab);
                 if (tab === 'Kurslar') setActiveMenu('kurslar');
                 if (tab === 'Xonalar') setActiveMenu('xonalar');
+                if (tab === 'Hodimlar') setActiveMenu('hodimlar');
+                if (tab === 'Xabar yuborish') setActiveMenu('xabar_yuborish');
               }}
               className={`pb-3 text-[13px] font-semibold whitespace-nowrap transition-all relative ${
                 activeTab === tab ? 'text-[#8b5cf6]' : 'text-gray-400 hover:text-gray-600'
@@ -198,7 +200,7 @@ export default function Kurslar({ setActiveMenu }) {
         }`}
       >
         <div 
-          className="absolute inset-0 bg-black/40 transition-opacity duration-300" 
+          className="absolute inset-0 bg-black/30 transition-opacity duration-300" 
           onClick={() => setIsAddDrawerOpen(false)}
         />
         <div 

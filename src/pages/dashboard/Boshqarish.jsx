@@ -8,7 +8,7 @@ const boshqarishSubMenu = [
   { id: 'xabar', text: 'Xabar yuborish' },
 ];
 
-export default function Boshqarish() {
+export default function Boshqarish({ setActiveMenu }) {
   const [activeBoshqarishTab, setActiveBoshqarishTab] = useState('kurslar');
   const [activeCourseBranch, setActiveCourseBranch] = useState('filial_1');
 
@@ -26,7 +26,13 @@ export default function Boshqarish() {
         {boshqarishSubMenu.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveBoshqarishTab(tab.id)}
+            onClick={() => {
+              setActiveBoshqarishTab(tab.id);
+              if (tab.id === 'kurslar') setActiveMenu('kurslar');
+              if (tab.id === 'xonalar') setActiveMenu('xonalar');
+              if (tab.id === 'hodimlar') setActiveMenu('hodimlar');
+              if (tab.id === 'xabar') setActiveMenu('xabar_yuborish');
+            }}
             className={`pb-3 text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors ${activeBoshqarishTab === tab.id
                 ? 'border-[#8b5cf6] text-[#8b5cf6]'
                 : 'border-transparent text-gray-500 hover:text-gray-700'

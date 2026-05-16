@@ -55,7 +55,7 @@ export default function DashboardPage() {
           <div className="p-8 pt-0">
             {activeMenu === 'asosiy' && <Asosiy />}
             {activeMenu === 'oqituvchilar' && <Oqituvchilar />}
-            {activeMenu === 'boshqarish' && <Boshqarish />}
+            {activeMenu === 'boshqarish' && <Boshqarish setActiveMenu={setActiveMenu} />}
             {activeMenu === 'kurslar' && <Kurslar setActiveMenu={setActiveMenu} />}
             {activeMenu === 'xonalar' && <Xonalar setActiveMenu={setActiveMenu} />}
             {activeMenu === 'talabalar' && <Talabalar />}
