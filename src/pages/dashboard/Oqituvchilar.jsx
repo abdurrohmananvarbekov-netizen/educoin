@@ -35,6 +35,113 @@ export default function Oqituvchilar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showArchived, setShowArchived] = useState(false);
   const [isAddTeacherOpen, setIsAddTeacherOpen] = useState(false);
+  const [editingTeacherId, setEditingTeacherId] = useState(null);
+
+  const [newTeacher, setNewTeacher] = useState({
+    phone: '',
+    email: '',
+    name: '',
+    birthDate: '',
+    groups: [],
+    gender: 'Erkak',
+  });
+  const [newGroupText, setNewGroupText] = useState('');
+
+  const handleAddGroup = (e) => {
+    if (e.key === 'Enter' && newGroupText.trim()) {
+      e.preventDefault();
+      if (!newTeacher.groups.includes(newGroupText.trim())) {
+        setNewTeacher(prev => ({ ...prev, groups: [...prev.groups, newGroupText.trim()] }));
+      }
+      setNewGroupText('');
+    }
+  };
+
+  const handleRemoveGroup = (groupToRemove) => {
+    setNewTeacher(prev => ({ ...prev, groups: prev.groups.filter(g => g !== groupToRemove) }));
+  };
+
+  const handleSaveTeacher = () => {
+    if (!newTeacher.name || !newTeacher.phone) {
+      alert("Iltimos, ism va telefon raqamini kiriting.");
+      return;
+    }
+    let formattedDate = newTeacher.birthDate;
+    if (formattedDate) {
+      const dateObj = new Date(formattedDate);
+      formattedDate = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, ' ');
+    } else {
+      formattedDate = '-';
+    }
+
+    let finalGroups = [...newTeacher.groups];
+    if (newGroupText.trim() && !finalGroups.includes(newGroupText.trim())) {
+      finalGroups.push(newGroupText.trim());
+    }
+
+    const teacherData = {
+      name: newTeacher.name,
+      groups: finalGroups,
+      phone: `+998${newTeacher.phone}`,
+      birthDate: formattedDate,
+    };
+
+    if (editingTeacherId) {
+      setTeachers(prev => prev.map(t => t.id === editingTeacherId ? { ...t, ...teacherData } : t));
+    } else {
+      const teacher = {
+        id: Date.now(),
+        ...teacherData,
+        createdAt: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, ' '),
+        coin: "0",
+        checked: false,
+        isArchived: false,
+      };
+      setTeachers([teacher, ...teachers]);
+    }
+
+    setIsAddTeacherOpen(false);
+    setEditingTeacherId(null);
+    setNewTeacher({
+      phone: '',
+      email: '',
+      name: '',
+      birthDate: '',
+      groups: [],
+      gender: 'Erkak',
+    });
+    setNewGroupText('');
+  };
+
+  const handleEditTeacher = (teacher) => {
+    setEditingTeacherId(teacher.id);
+    let rawPhone = teacher.phone || '';
+    if (rawPhone.startsWith('+998')) {
+      rawPhone = rawPhone.substring(4);
+    }
+    
+    let parsedDate = '';
+    if (teacher.birthDate && teacher.birthDate !== '-') {
+      const d = new Date(teacher.birthDate);
+      if (!isNaN(d.getTime())) {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        parsedDate = `${year}-${month}-${day}`;
+      }
+    }
+
+    setNewTeacher({
+      phone: rawPhone,
+      email: '',
+      name: teacher.name || '',
+      birthDate: parsedDate,
+      groups: teacher.groups || [],
+      gender: 'Erkak',
+    });
+    setNewGroupText('');
+    setIsAddTeacherOpen(true);
+  };
 
   const handleToggleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -90,7 +197,19 @@ export default function Oqituvchilar() {
                           Export
                       </button>
                       <button 
-                          onClick={() => setIsAddTeacherOpen(true)}
+                          onClick={() => {
+                            setEditingTeacherId(null);
+                            setNewTeacher({
+                              phone: '',
+                              email: '',
+                              name: '',
+                              birthDate: '',
+                              groups: [],
+                              gender: 'Erkak',
+                            });
+                            setNewGroupText('');
+                            setIsAddTeacherOpen(true);
+                          }}
                           className="flex items-center gap-2 px-4 py-2.5 bg-[#8b5cf6] text-white rounded-xl hover:bg-[#7c3aed] font-semibold text-[13px] transition-colors shadow-sm"
                       >
                           <Add fontSize="small" />
@@ -157,14 +276,13 @@ export default function Oqituvchilar() {
                                   <th className="px-4 py-3">Telefon raqamlari</th>
                                   <th className="px-4 py-3">Tug'ilgan sanasi</th>
                                   <th className="px-4 py-3">Yaratilgan sana</th>
-                                  <th className="px-4 py-3">Coin</th>
                                   <th className="px-4 py-3 text-right"></th>
                               </tr>
                           </thead>
                           <tbody className="divide-y divide-gray-100 text-gray-700 font-medium">
                               {filteredTeachers.length === 0 ? (
                                   <tr>
-                                    <td colSpan="8" className="px-4 py-8 text-center text-gray-500">
+                                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
                                       Hech narsa topilmadi
                                     </td>
                                   </tr>
@@ -197,19 +315,7 @@ export default function Oqituvchilar() {
                                       <td className="px-4 py-3 text-gray-500">{teacher.birthDate}</td>
                                       <td className="px-4 py-3 text-gray-500">{teacher.createdAt}</td>
                                       <td className="px-4 py-3">
-                                          <div className="flex items-center gap-1.5">
-                                              <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
-                                              <span>{teacher.coin}</span>
-                                          </div>
-                                      </td>
-                                      <td className="px-4 py-3">
                                           <div className="flex items-center justify-end gap-2 text-gray-400">
-                                              <button className="w-7 h-7 flex items-center justify-center border border-gray-200 rounded hover:bg-red-50 text-red-500 transition-colors">
-                                                <span className="font-bold text-lg leading-none mb-0.5">-</span>
-                                              </button>
-                                              <button className="w-7 h-7 flex items-center justify-center border border-gray-200 rounded hover:bg-green-50 text-green-500 transition-colors">
-                                                <span className="font-bold text-lg leading-none mb-0.5">+</span>
-                                              </button>
                                               <button className="w-7 h-7 flex items-center justify-center hover:bg-gray-100 rounded transition-colors">
                                                   <VisibilityOutlined sx={{ fontSize: 18 }} />
                                               </button>
@@ -219,7 +325,7 @@ export default function Oqituvchilar() {
                                               <button onClick={() => handleDeleteTeacher(teacher.id)} className="w-7 h-7 flex items-center justify-center hover:bg-red-50 text-gray-500 hover:text-red-500 rounded transition-colors" title="O'chirish">
                                                   <DeleteOutlined sx={{ fontSize: 18 }} />
                                               </button>
-                                              <button className="w-7 h-7 flex items-center justify-center hover:bg-gray-100 rounded transition-colors">
+                                              <button onClick={() => handleEditTeacher(teacher)} className="w-7 h-7 flex items-center justify-center hover:bg-gray-100 rounded transition-colors">
                                                   <EditOutlined sx={{ fontSize: 18 }} />
                                               </button>
                                           </div>
@@ -261,7 +367,7 @@ export default function Oqituvchilar() {
           {/* Header */}
           <div className="flex items-start justify-between px-6 pt-6 pb-2">
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-1">O'qituvchi qoshish</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-1">{editingTeacherId ? "O'qituvchini tahrirlash" : "O'qituvchi qoshish"}</h2>
               <p className="text-xs text-gray-500">Bu yerda siz yangi o'qituvchi qo'shishingiz mumkin.</p>
             </div>
             <button onClick={() => setIsAddTeacherOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
@@ -278,7 +384,12 @@ export default function Oqituvchilar() {
                 <div className="bg-gray-50 px-3 py-2.5 border-r border-gray-200 text-gray-600 font-medium text-[13px] flex items-center justify-center">
                   +998
                 </div>
-                <input type="text" className="flex-1 px-3 py-2.5 text-[13px] focus:outline-none" />
+                <input 
+                  type="text" 
+                  value={newTeacher.phone}
+                  onChange={(e) => setNewTeacher({...newTeacher, phone: e.target.value})}
+                  className="flex-1 px-3 py-2.5 text-[13px] focus:outline-none" 
+                />
               </div>
             </div>
 
@@ -291,6 +402,8 @@ export default function Oqituvchilar() {
                 </div>
                 <input 
                   type="email" 
+                  value={newTeacher.email}
+                  onChange={(e) => setNewTeacher({...newTeacher, email: e.target.value})}
                   placeholder="Elektron pochtani kiriting" 
                   className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all" 
                 />
@@ -302,6 +415,8 @@ export default function Oqituvchilar() {
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">O'qituvchi FIO</label>
               <input 
                 type="text" 
+                value={newTeacher.name}
+                onChange={(e) => setNewTeacher({...newTeacher, name: e.target.value})}
                 placeholder="Ma'lumotni kiriting" 
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all" 
               />
@@ -311,13 +426,14 @@ export default function Oqituvchilar() {
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Tug'ilgan sanasi</label>
               <div className="relative">
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
                   <CalendarTodayOutlined fontSize="small" />
                 </div>
                 <input 
-                  type="text" 
-                  defaultValue="01.03.1990" 
-                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] font-medium text-gray-800 focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all" 
+                  type="date" 
+                  value={newTeacher.birthDate}
+                  onChange={(e) => setNewTeacher({...newTeacher, birthDate: e.target.value})}
+                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] font-medium text-gray-800 focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all relative [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer" 
                 />
               </div>
             </div>
@@ -325,15 +441,22 @@ export default function Oqituvchilar() {
             {/* Guruh */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Guruh</label>
-              <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-[#8b5cf6] focus-within:ring-1 focus-within:ring-[#8b5cf6] transition-all">
+              <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-[#8b5cf6] focus-within:ring-1 focus-within:ring-[#8b5cf6] transition-all flex-wrap">
                 <Search fontSize="small" className="text-gray-400" />
-                <div className="flex items-center gap-1.5 flex-1 overflow-x-auto no-scrollbar">
-                  <span className="flex items-center gap-1 px-2 py-0.5 bg-gray-100 rounded text-[12px] font-semibold text-gray-700 whitespace-nowrap">
-                    dFDFASC <button className="hover:text-red-500"><Close sx={{ fontSize: 12 }} /></button>
-                  </span>
-                  <span className="flex items-center gap-1 px-2 py-0.5 bg-gray-100 rounded text-[12px] font-semibold text-gray-700 whitespace-nowrap">
-                    JDCCXH <button className="hover:text-red-500"><Close sx={{ fontSize: 12 }} /></button>
-                  </span>
+                <div className="flex items-center gap-1.5 flex-1 flex-wrap">
+                  {newTeacher.groups.map(g => (
+                    <span key={g} className="flex items-center gap-1 px-2 py-0.5 bg-gray-100 rounded text-[12px] font-semibold text-gray-700 whitespace-nowrap">
+                      {g} <button type="button" onClick={() => handleRemoveGroup(g)} className="hover:text-red-500"><Close sx={{ fontSize: 12 }} /></button>
+                    </span>
+                  ))}
+                  <input 
+                    type="text" 
+                    value={newGroupText}
+                    onChange={(e) => setNewGroupText(e.target.value)}
+                    onKeyDown={handleAddGroup}
+                    className="flex-1 min-w-[120px] text-[13px] text-gray-800 focus:outline-none bg-transparent placeholder-gray-400" 
+                    placeholder="Guruh nomi"
+                  />
                 </div>
               </div>
             </div>
@@ -343,11 +466,23 @@ export default function Oqituvchilar() {
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Jinsi</label>
               <div className="flex gap-6 bg-gray-50 border border-gray-100 rounded-xl p-3">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="gender" defaultChecked className="w-4 h-4 text-[#8b5cf6] focus:ring-[#8b5cf6] border-gray-300" />
+                  <input 
+                    type="radio" 
+                    name="gender" 
+                    checked={newTeacher.gender === 'Erkak'}
+                    onChange={() => setNewTeacher({...newTeacher, gender: 'Erkak'})}
+                    className="w-4 h-4 text-[#8b5cf6] focus:ring-[#8b5cf6] border-gray-300" 
+                  />
                   <span className="text-[13px] font-medium text-gray-700">Erkak</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="gender" className="w-4 h-4 text-[#8b5cf6] focus:ring-[#8b5cf6] border-gray-300" />
+                  <input 
+                    type="radio" 
+                    name="gender" 
+                    checked={newTeacher.gender === 'Ayol'}
+                    onChange={() => setNewTeacher({...newTeacher, gender: 'Ayol'})}
+                    className="w-4 h-4 text-[#8b5cf6] focus:ring-[#8b5cf6] border-gray-300" 
+                  />
                   <span className="text-[13px] font-medium text-gray-700">Ayol</span>
                 </label>
               </div>
@@ -383,7 +518,10 @@ export default function Oqituvchilar() {
             >
               Bekor qilish
             </button>
-            <button className="px-5 py-2.5 bg-gray-50 text-gray-400 rounded-xl text-[13px] font-semibold hover:bg-gray-100 hover:text-gray-500 transition-colors">
+            <button 
+              onClick={handleSaveTeacher}
+              className="px-5 py-2.5 bg-[#8b5cf6] text-white rounded-xl text-[13px] font-semibold hover:bg-[#7c3aed] transition-colors"
+            >
               Saqlash
             </button>
           </div>
