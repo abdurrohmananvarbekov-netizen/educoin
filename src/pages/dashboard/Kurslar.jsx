@@ -121,12 +121,12 @@ export default function Kurslar({ setActiveMenu }) {
                 if (tab === 'Xabar yuborish') setActiveMenu('xabar_yuborish');
               }}
               className={`pb-3 text-[13px] font-semibold whitespace-nowrap transition-all relative ${
-                activeTab === tab ? 'text-[#8b5cf6]' : 'text-gray-400 hover:text-gray-600'
+                activeTab === tab ? 'text-[#7c3aed]' : 'text-gray-400 hover:text-gray-600'
               }`}
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#8b5cf6] rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#7c3aed] rounded-full" />
               )}
             </button>
           ))}
@@ -144,7 +144,7 @@ export default function Kurslar({ setActiveMenu }) {
               e.preventDefault();
               setIsAddDrawerOpen(true);
             }}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#8b5cf6] text-white rounded-xl hover:bg-[#7c3aed] font-semibold text-[13px] transition-colors shadow-sm cursor-pointer z-10"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm cursor-pointer z-10"
           >
             <Add fontSize="small" />
             Kurslar qo'shish
@@ -171,7 +171,7 @@ export default function Kurslar({ setActiveMenu }) {
                       </button>
                       <button 
                         onClick={() => handleEditCourse(course)}
-                        className="p-1.5 text-gray-400 hover:text-[#8b5cf6] transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-[#7c3aed] transition-colors"
                       >
                         <EditOutlined sx={{ fontSize: 18 }} />
                       </button>
@@ -237,7 +237,7 @@ export default function Kurslar({ setActiveMenu }) {
               <input 
                 type="text"
                 placeholder="HR Manager..."
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={newCourse.title}
                 onChange={(e) => setNewCourse({...newCourse, title: e.target.value})}
               />
@@ -248,7 +248,7 @@ export default function Kurslar({ setActiveMenu }) {
               <label className="text-[14px] font-bold text-gray-900">Dars davomiyligi</label>
               <div className="relative">
                 <select 
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#8b5cf6] transition-colors text-gray-500"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#7c3aed] transition-colors text-gray-500"
                   value={newCourse.duration}
                   onChange={(e) => setNewCourse({...newCourse, duration: e.target.value})}
                 >
@@ -266,7 +266,7 @@ export default function Kurslar({ setActiveMenu }) {
               <label className="text-[14px] font-bold text-gray-900">Kurs davomiyligi (oylarda)</label>
               <div className="relative">
                 <select 
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#8b5cf6] transition-colors text-gray-500"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#7c3aed] transition-colors text-gray-500"
                   value={newCourse.period}
                   onChange={(e) => setNewCourse({...newCourse, period: e.target.value})}
                 >
@@ -288,7 +288,7 @@ export default function Kurslar({ setActiveMenu }) {
                 <input 
                   type="text"
                   placeholder="Narxini kiriting"
-                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                   value={newCourse.price}
                   onChange={(e) => setNewCourse({...newCourse, price: e.target.value})}
                 />
@@ -300,7 +300,7 @@ export default function Kurslar({ setActiveMenu }) {
               <label className="text-[14px] font-bold text-gray-900">Description</label>
               <textarea 
                 rows="4"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#8b5cf6] transition-colors resize-none"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors resize-none"
                 placeholder="A little about the company and the team that you'll be working with."
                 value={newCourse.description}
                 onChange={(e) => setNewCourse({...newCourse, description: e.target.value})}
@@ -320,7 +320,7 @@ export default function Kurslar({ setActiveMenu }) {
                     key={color}
                     onClick={() => setNewCourse({...newCourse, color})}
                     className={`w-8 h-8 rounded-full transition-transform hover:scale-110 ${
-                      newCourse.color === color ? 'ring-2 ring-offset-2 ring-[#8b5cf6] scale-110' : ''
+                      newCourse.color === color ? 'ring-2 ring-offset-2 ring-[#7c3aed] scale-110' : ''
                     }`}
                     style={{ backgroundColor: color }}
                   />
@@ -339,7 +339,7 @@ export default function Kurslar({ setActiveMenu }) {
             </button>
             <button 
               onClick={handleSaveCourse}
-              className="flex-1 px-4 py-3 bg-[#8b5cf6] text-white rounded-xl text-[14px] font-bold hover:bg-[#7c3aed] transition-colors shadow-lg shadow-purple-100"
+              className="flex-1 px-4 py-3 bg-[#7c3aed] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
             >
               Saqlash
             </button>
@@ -349,3 +349,4 @@ export default function Kurslar({ setActiveMenu }) {
     </div>
   );
 }
+

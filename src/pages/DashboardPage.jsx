@@ -105,7 +105,7 @@ export default function DashboardPage() {
                      setActiveMenu(item.id);
                      setIsOthersMenuOpen(false);
                    }}
-                   className="w-full flex items-center gap-4 px-3 py-3 rounded-xl hover:bg-gray-50 text-gray-500 hover:text-[#8b5cf6] transition-all group"
+                   className="w-full flex items-center gap-4 px-3 py-3 rounded-xl hover:bg-gray-50 text-gray-500 hover:text-[#7c3aed] transition-all group"
                  >
                    <div className="w-5 h-5 flex items-center justify-center transition-colors">
                      {React.cloneElement(item.icon, { sx: { fontSize: 20 } })}
@@ -120,3 +120,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

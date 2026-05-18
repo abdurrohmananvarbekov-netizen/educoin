@@ -96,12 +96,12 @@ export default function Xonalar({ setActiveMenu }) {
                 if (tab === 'Xabar yuborish') setActiveMenu('xabar_yuborish');
               }}
               className={`pb-3 text-[13px] font-semibold whitespace-nowrap transition-all relative ${
-                activeTab === tab ? 'text-[#8b5cf6]' : 'text-gray-400 hover:text-gray-600'
+                activeTab === tab ? 'text-[#7c3aed]' : 'text-gray-400 hover:text-gray-600'
               }`}
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#8b5cf6] rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#7c3aed] rounded-full" />
               )}
             </button>
           ))}
@@ -120,7 +120,7 @@ export default function Xonalar({ setActiveMenu }) {
           </div>
           <button 
             onClick={() => setIsAddDrawerOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#8b5cf6] text-white rounded-xl hover:bg-[#7c3aed] font-semibold text-[13px] transition-colors shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
           >
             <Add fontSize="small" />
             Xonani qo'shish
@@ -149,7 +149,7 @@ export default function Xonalar({ setActiveMenu }) {
                     </button>
                     <button 
                       onClick={() => handleEditRoom(room)}
-                      className="p-1.5 text-gray-400 hover:text-[#8b5cf6] transition-colors"
+                      className="p-1.5 text-gray-400 hover:text-[#7c3aed] transition-colors"
                     >
                       <EditOutlined sx={{ fontSize: 18 }} />
                     </button>
@@ -202,7 +202,7 @@ export default function Xonalar({ setActiveMenu }) {
               <input 
                 type="text"
                 placeholder="Xona nomi"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={newRoom.name}
                 onChange={(e) => setNewRoom({...newRoom, name: e.target.value})}
               />
@@ -215,7 +215,7 @@ export default function Xonalar({ setActiveMenu }) {
               <input 
                 type="number"
                 placeholder="Xona sig'imi"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={newRoom.capacity}
                 min="0"
                 onChange={(e) => {
@@ -240,7 +240,7 @@ export default function Xonalar({ setActiveMenu }) {
             </button>
             <button 
               onClick={handleSaveRoom}
-              className="flex-1 px-4 py-3 bg-[#8b5cf6] text-white rounded-xl text-[14px] font-bold hover:bg-[#7c3aed] transition-colors shadow-lg shadow-purple-100"
+              className="flex-1 px-4 py-3 bg-[#7c3aed] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
             >
               Saqlash
             </button>
@@ -250,3 +250,4 @@ export default function Xonalar({ setActiveMenu }) {
     </div>
   );
 }
+

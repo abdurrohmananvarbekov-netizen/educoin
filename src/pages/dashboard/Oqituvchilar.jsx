@@ -45,17 +45,11 @@ export default function Oqituvchilar() {
     groups: [],
     gender: 'Erkak',
   });
-  const [newGroupText, setNewGroupText] = useState('');
 
-  const handleAddGroup = (e) => {
-    if (e.key === 'Enter' && newGroupText.trim()) {
-      e.preventDefault();
-      if (!newTeacher.groups.includes(newGroupText.trim())) {
-        setNewTeacher(prev => ({ ...prev, groups: [...prev.groups, newGroupText.trim()] }));
-      }
-      setNewGroupText('');
-    }
-  };
+  const availableGroups = ['N26', 'n105'];
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [groupSearch, setGroupSearch] = useState('');
+  const [selectedGroupsForModal, setSelectedGroupsForModal] = useState([]);
 
   const handleRemoveGroup = (groupToRemove) => {
     setNewTeacher(prev => ({ ...prev, groups: prev.groups.filter(g => g !== groupToRemove) }));
@@ -75,9 +69,6 @@ export default function Oqituvchilar() {
     }
 
     let finalGroups = [...newTeacher.groups];
-    if (newGroupText.trim() && !finalGroups.includes(newGroupText.trim())) {
-      finalGroups.push(newGroupText.trim());
-    }
 
     const teacherData = {
       name: newTeacher.name,
@@ -110,7 +101,6 @@ export default function Oqituvchilar() {
       groups: [],
       gender: 'Erkak',
     });
-    setNewGroupText('');
   };
 
   const handleEditTeacher = (teacher) => {
@@ -139,7 +129,6 @@ export default function Oqituvchilar() {
       groups: teacher.groups || [],
       gender: 'Erkak',
     });
-    setNewGroupText('');
     setIsAddTeacherOpen(true);
   };
 
@@ -207,10 +196,9 @@ export default function Oqituvchilar() {
                               groups: [],
                               gender: 'Erkak',
                             });
-                            setNewGroupText('');
                             setIsAddTeacherOpen(true);
                           }}
-                          className="flex items-center gap-2 px-4 py-2.5 bg-[#8b5cf6] text-white rounded-xl hover:bg-[#7c3aed] font-semibold text-[13px] transition-colors shadow-sm"
+                          className="flex items-center gap-2 px-4 py-2.5 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
                       >
                           <Add fontSize="small" />
                           O'qituvchi qo'shish
@@ -242,12 +230,12 @@ export default function Oqituvchilar() {
                               value={searchQuery}
                               onChange={(e) => setSearchQuery(e.target.value)}
                               placeholder="Qidiruv" 
-                              className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-[13px] font-medium focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all shadow-sm w-[240px]"
+                              className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-[13px] font-medium focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all shadow-sm w-[240px]"
                           />
                       </div>
                       <button 
                         onClick={() => setShowArchived(!showArchived)}
-                        className={`flex items-center gap-1.5 px-3 py-2 border rounded-xl font-semibold text-[13px] transition-colors shadow-sm ${showArchived ? 'bg-[#8b5cf6] border-[#8b5cf6] text-white' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                        className={`flex items-center gap-1.5 px-3 py-2 border rounded-xl font-semibold text-[13px] transition-colors shadow-sm ${showArchived ? 'bg-[#7c3aed] border-[#7c3aed] text-white' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                       >
                           {showArchived ? 'Asosiy ro\'yxat' : 'Arxiv'}
                           <Inventory2Outlined fontSize="small" />
@@ -266,7 +254,7 @@ export default function Oqituvchilar() {
                                         type="checkbox" 
                                         checked={allSelected} 
                                         onChange={handleToggleSelectAll} 
-                                        className="w-4 h-4 rounded border-gray-300 text-[#8b5cf6] focus:ring-[#8b5cf6]" 
+                                        className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]" 
                                       />
                                   </th>
                                   <th className="px-4 py-3 cursor-pointer hover:text-gray-700">
@@ -293,7 +281,7 @@ export default function Oqituvchilar() {
                                               type="checkbox" 
                                               checked={teacher.checked || false}
                                               onChange={() => handleToggleTeacher(teacher.id)}
-                                              className="w-4 h-4 rounded border-gray-300 text-[#8b5cf6] focus:ring-[#8b5cf6] accent-[#8b5cf6]" 
+                                              className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed] accent-[#7c3aed]" 
                                           />
                                       </td>
                                       <td className="px-4 py-3">
@@ -319,7 +307,7 @@ export default function Oqituvchilar() {
                                               <button className="w-7 h-7 flex items-center justify-center hover:bg-gray-100 rounded transition-colors">
                                                   <VisibilityOutlined sx={{ fontSize: 18 }} />
                                               </button>
-                                              <button onClick={() => handleArchiveTeacher(teacher.id)} className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${teacher.isArchived ? 'bg-[#8b5cf6] text-white' : 'hover:bg-gray-100'}`} title={teacher.isArchived ? "Arxivdan chiqarish" : "Arxivga olish"}>
+                                              <button onClick={() => handleArchiveTeacher(teacher.id)} className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${teacher.isArchived ? 'bg-[#7c3aed] text-white' : 'hover:bg-gray-100'}`} title={teacher.isArchived ? "Arxivdan chiqarish" : "Arxivga olish"}>
                                                   <Inventory2Outlined sx={{ fontSize: 18 }} />
                                               </button>
                                               <button onClick={() => handleDeleteTeacher(teacher.id)} className="w-7 h-7 flex items-center justify-center hover:bg-red-50 text-gray-500 hover:text-red-500 rounded transition-colors" title="O'chirish">
@@ -380,7 +368,7 @@ export default function Oqituvchilar() {
             {/* Telefon raqam */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Telefon raqam</label>
-              <div className="flex border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#8b5cf6] focus-within:ring-1 focus-within:ring-[#8b5cf6] transition-all">
+              <div className="flex border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed] transition-all">
                 <div className="bg-gray-50 px-3 py-2.5 border-r border-gray-200 text-gray-600 font-medium text-[13px] flex items-center justify-center">
                   +998
                 </div>
@@ -405,7 +393,7 @@ export default function Oqituvchilar() {
                   value={newTeacher.email}
                   onChange={(e) => setNewTeacher({...newTeacher, email: e.target.value})}
                   placeholder="Elektron pochtani kiriting" 
-                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all" 
+                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all" 
                 />
               </div>
             </div>
@@ -418,7 +406,7 @@ export default function Oqituvchilar() {
                 value={newTeacher.name}
                 onChange={(e) => setNewTeacher({...newTeacher, name: e.target.value})}
                 placeholder="Ma'lumotni kiriting" 
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all" 
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all" 
               />
             </div>
 
@@ -433,7 +421,7 @@ export default function Oqituvchilar() {
                   type="date" 
                   value={newTeacher.birthDate}
                   onChange={(e) => setNewTeacher({...newTeacher, birthDate: e.target.value})}
-                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] font-medium text-gray-800 focus:outline-none focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6] transition-all relative [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer" 
+                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] font-medium text-gray-800 focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all relative [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer" 
                 />
               </div>
             </div>
@@ -441,24 +429,24 @@ export default function Oqituvchilar() {
             {/* Guruh */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Guruh</label>
-              <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2 focus-within:border-[#8b5cf6] focus-within:ring-1 focus-within:ring-[#8b5cf6] transition-all flex-wrap">
-                <Search fontSize="small" className="text-gray-400" />
-                <div className="flex items-center gap-1.5 flex-1 flex-wrap">
-                  {newTeacher.groups.map(g => (
-                    <span key={g} className="flex items-center gap-1 px-2 py-0.5 bg-gray-100 rounded text-[12px] font-semibold text-gray-700 whitespace-nowrap">
-                      {g} <button type="button" onClick={() => handleRemoveGroup(g)} className="hover:text-red-500"><Close sx={{ fontSize: 12 }} /></button>
-                    </span>
-                  ))}
-                  <input 
-                    type="text" 
-                    value={newGroupText}
-                    onChange={(e) => setNewGroupText(e.target.value)}
-                    onKeyDown={handleAddGroup}
-                    className="flex-1 min-w-[120px] text-[13px] text-gray-800 focus:outline-none bg-transparent placeholder-gray-400" 
-                    placeholder="Guruh nomi"
-                  />
-                </div>
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {newTeacher.groups.map(g => (
+                  <span key={g} className="flex items-center gap-1 px-2.5 py-1 bg-purple-50 text-[#7c3aed] rounded-lg text-[11px] font-bold uppercase whitespace-nowrap">
+                    {g} <button type="button" onClick={() => handleRemoveGroup(g)} className="hover:text-red-500 cursor-pointer"><Close sx={{ fontSize: 12 }} /></button>
+                  </span>
+                ))}
               </div>
+              <button 
+                type="button"
+                onClick={() => {
+                  setSelectedGroupsForModal(newTeacher.groups);
+                  setIsGroupModalOpen(true);
+                }}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#7c3aed] font-bold text-[13px] hover:bg-gray-50 transition-colors cursor-pointer"
+              >
+                <Add fontSize="small" />
+                Guruh qo'shish
+              </button>
             </div>
 
             {/* Jinsi */}
@@ -471,7 +459,7 @@ export default function Oqituvchilar() {
                     name="gender" 
                     checked={newTeacher.gender === 'Erkak'}
                     onChange={() => setNewTeacher({...newTeacher, gender: 'Erkak'})}
-                    className="w-4 h-4 text-[#8b5cf6] focus:ring-[#8b5cf6] border-gray-300" 
+                    className="w-4 h-4 text-[#7c3aed] focus:ring-[#7c3aed] border-gray-300" 
                   />
                   <span className="text-[13px] font-medium text-gray-700">Erkak</span>
                 </label>
@@ -481,7 +469,7 @@ export default function Oqituvchilar() {
                     name="gender" 
                     checked={newTeacher.gender === 'Ayol'}
                     onChange={() => setNewTeacher({...newTeacher, gender: 'Ayol'})}
-                    className="w-4 h-4 text-[#8b5cf6] focus:ring-[#8b5cf6] border-gray-300" 
+                    className="w-4 h-4 text-[#7c3aed] focus:ring-[#7c3aed] border-gray-300" 
                   />
                   <span className="text-[13px] font-medium text-gray-700">Ayol</span>
                 </label>
@@ -491,12 +479,12 @@ export default function Oqituvchilar() {
             {/* Surati */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Surati</label>
-              <div className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#8b5cf6] transition-all">
+              <div className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#7c3aed] transition-all">
                 <div className="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-500 mb-3 shadow-sm">
                   <CloudUploadOutlined fontSize="small" />
                 </div>
                 <p className="text-[13px] text-gray-600 mb-1">
-                  <span className="text-[#8b5cf6] font-semibold">Click to upload</span> or drag and drop
+                  <span className="text-[#7c3aed] font-semibold">Click to upload</span> or drag and drop
                 </p>
                 <p className="text-[11px] text-gray-400 font-medium">JPG or PNG (max. 800x800px)</p>
               </div>
@@ -504,7 +492,7 @@ export default function Oqituvchilar() {
 
             {/* Parol qo'shish */}
             <div className="flex justify-end pt-1">
-              <button className="text-[13px] font-semibold text-[#8b5cf6] flex items-center gap-1 hover:text-[#7c3aed] transition-colors">
+              <button className="text-[13px] font-semibold text-[#7c3aed] flex items-center gap-1 hover:text-[#6d28d9] transition-colors">
                 <Add fontSize="small" /> Parol qoshish
               </button>
             </div>
@@ -520,13 +508,97 @@ export default function Oqituvchilar() {
             </button>
             <button 
               onClick={handleSaveTeacher}
-              className="px-5 py-2.5 bg-[#8b5cf6] text-white rounded-xl text-[13px] font-semibold hover:bg-[#7c3aed] transition-colors"
+              className="px-5 py-2.5 bg-[#7c3aed] text-white rounded-xl text-[13px] font-semibold hover:bg-[#6d28d9] transition-colors"
             >
               Saqlash
             </button>
           </div>
         </div>
       </div>
+
+      {/* Group Selection Modal */}
+      {isGroupModalOpen && (
+        <div className="fixed inset-0 z-[1010] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-black/30 transition-opacity duration-300" 
+            onClick={() => setIsGroupModalOpen(false)}
+          />
+          <div className="relative bg-white w-full max-w-[440px] rounded-[24px] shadow-2xl overflow-hidden animate-in zoom-in duration-200 z-[1020]">
+            {/* Modal Header */}
+            <div className="p-6 flex items-center justify-between border-b border-gray-50">
+              <div className="space-y-1">
+                <h3 className="text-lg font-bold text-gray-900">Guruhga biriktirish</h3>
+                <p className="text-[13px] text-gray-500">Bir yoki bir nechta guruhni tanlang</p>
+              </div>
+              <button 
+                onClick={() => setIsGroupModalOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 transition-colors"
+              >
+                <Close />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" sx={{ fontSize: 18 }} />
+                <input 
+                  type="text" 
+                  placeholder="Guruh qidirish..." 
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
+                  value={groupSearch}
+                  onChange={(e) => setGroupSearch(e.target.value)}
+                />
+              </div>
+
+              <div className="max-h-[300px] overflow-y-auto no-scrollbar space-y-1">
+                {availableGroups
+                  .filter(g => g.toLowerCase().includes(groupSearch.toLowerCase()))
+                  .map((group) => (
+                    <label 
+                      key={group}
+                      className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl cursor-pointer transition-colors group"
+                    >
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
+                        checked={selectedGroupsForModal.includes(group)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedGroupsForModal([...selectedGroupsForModal, group]);
+                          } else {
+                            setSelectedGroupsForModal(selectedGroupsForModal.filter(g => g !== group));
+                          }
+                        }}
+                      />
+                      <span className="text-[14px] font-bold text-gray-700 uppercase group-hover:text-gray-900">{group}</span>
+                    </label>
+                  ))}
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-gray-100 flex items-center justify-end gap-3">
+              <button 
+                onClick={() => setIsGroupModalOpen(false)}
+                className="px-6 py-2.5 border border-gray-100 rounded-xl text-[13px] font-bold text-gray-600 hover:bg-gray-50 transition-colors"
+              >
+                Bekor qilish
+              </button>
+              <button 
+                onClick={() => {
+                  setNewTeacher(prev => ({ ...prev, groups: selectedGroupsForModal }));
+                  setIsGroupModalOpen(false);
+                }}
+                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#7c3aed] transition-all shadow-lg shadow-purple-50"
+              >
+                Qo'shish
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
+

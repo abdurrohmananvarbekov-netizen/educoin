@@ -10,12 +10,12 @@ import {
 } from '@mui/icons-material';
 
 const statCards = [
-  { id: 1, title: 'Faol talabalar', value: 52, icon: <SchoolOutlined sx={{ fontSize: 24, color: '#8b5cf6' }} /> },
-  { id: 2, title: 'Guruhlar', value: 23, icon: <GroupOutlined sx={{ fontSize: 24, color: '#8b5cf6' }} /> },
-  { id: 3, title: 'Joriy oy to\'lovlar', value: 0, icon: <CreditCardOutlined sx={{ fontSize: 24, color: '#8b5cf6' }} /> },
-  { id: 4, title: 'Qarzdorlar', value: 104, icon: <ReportProblemOutlined sx={{ fontSize: 24, color: '#8b5cf6' }} /> },
-  { id: 5, title: 'Muzlatilganlar', value: 0, icon: <AcUnitOutlined sx={{ fontSize: 24, color: '#8b5cf6' }} /> },
-  { id: 6, title: 'Arxivdagilar', value: 23, icon: <Inventory2Outlined sx={{ fontSize: 24, color: '#8b5cf6' }} /> },
+  { id: 1, title: 'Faol talabalar', value: 52, icon: <SchoolOutlined sx={{ fontSize: 24, color: '#7c3aed' }} /> },
+  { id: 2, title: 'Guruhlar', value: 23, icon: <GroupOutlined sx={{ fontSize: 24, color: '#7c3aed' }} /> },
+  { id: 3, title: 'Joriy oy to\'lovlar', value: 0, icon: <CreditCardOutlined sx={{ fontSize: 24, color: '#7c3aed' }} /> },
+  { id: 4, title: 'Qarzdorlar', value: 104, icon: <ReportProblemOutlined sx={{ fontSize: 24, color: '#7c3aed' }} /> },
+  { id: 5, title: 'Muzlatilganlar', value: 0, icon: <AcUnitOutlined sx={{ fontSize: 24, color: '#7c3aed' }} /> },
+  { id: 6, title: 'Arxivdagilar', value: 23, icon: <Inventory2Outlined sx={{ fontSize: 24, color: '#7c3aed' }} /> },
 ];
 
 export default function Asosiy() {
@@ -80,3 +80,4 @@ export default function Asosiy() {
     </div>
   );
 }
+

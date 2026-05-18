@@ -35,7 +35,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
         {/* Sidebar Toggle - Positioned on the border */}
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="absolute right-0 top-6 translate-x-1/2 w-8 h-8 bg-[#8b5cf6] rounded-lg flex items-center justify-center text-white hover:bg-[#7c3aed] transition-colors shadow-md z-[60]"
+          className="absolute right-0 top-6 translate-x-1/2 w-8 h-8 bg-[#7c3aed] rounded-lg flex items-center justify-center text-white hover:bg-[#6d28d9] transition-colors shadow-md z-[60]"
         >
           {sidebarOpen ? <ChevronLeft fontSize="small" /> : <ChevronRight fontSize="small" />}
         </button>
@@ -69,7 +69,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
                  isOthersMenuOpen && item.id === 'boshqarish' || 
                  item.id === 'boshqarish' && ['kurslar', 'xonalar', 'hodimlar', 'xabar_yuborish'].includes(activeMenu)
                 )
-                  ? 'bg-[#8b5cf6] text-white shadow-lg shadow-purple-200' 
+                  ? 'bg-[#7c3aed] text-white shadow-lg shadow-purple-200' 
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
@@ -133,3 +133,4 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
       </div>
   );
 }
+

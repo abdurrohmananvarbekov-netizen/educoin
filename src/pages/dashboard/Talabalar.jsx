@@ -127,7 +127,7 @@ export default function Talabalar() {
         </div>
         <button 
           onClick={() => setIsAddDrawerOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#8b5cf6] text-white rounded-xl hover:bg-[#7c3aed] font-semibold text-[13px] transition-colors shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
         >
           <Add fontSize="small" />
           Talaba qo'shish
@@ -143,7 +143,7 @@ export default function Talabalar() {
             <input 
               type="text" 
               placeholder="Search" 
-              className="w-full pl-10 pr-4 py-2 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+              className="w-full pl-10 pr-4 py-2 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -168,7 +168,7 @@ export default function Talabalar() {
                 <th className="px-6 py-4 w-10 text-center">
                   <input 
                     type="checkbox" 
-                    className="w-4 h-4 rounded border-gray-300 text-[#8b5cf6] focus:ring-[#8b5cf6]"
+                    className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
                     onChange={toggleSelectAll}
                   />
                 </th>
@@ -188,14 +188,14 @@ export default function Talabalar() {
                   <td className="px-6 py-4 text-center">
                     <input 
                       type="checkbox" 
-                      className="w-4 h-4 rounded border-gray-300 text-[#8b5cf6] focus:ring-[#8b5cf6]"
+                      className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
                       checked={selectedStudents.includes(student.id)}
                       onChange={() => toggleSelectStudent(student.id)}
                     />
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-[#8b5cf6] font-bold text-[12px]">
+                      <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-[#7c3aed] font-bold text-[12px]">
                         {student.name.charAt(0)}
                       </div>
                       <span className="text-[13px] font-bold text-gray-700">{student.name}</span>
@@ -228,7 +228,7 @@ export default function Talabalar() {
                       </button>
                       <button 
                         onClick={() => handleEditStudent(student)}
-                        className="p-1.5 text-gray-400 hover:text-[#8b5cf6] transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-[#7c3aed] transition-colors"
                       >
                         <EditOutlined sx={{ fontSize: 18 }} />
                       </button>
@@ -250,7 +250,7 @@ export default function Talabalar() {
               <button 
                 key={idx}
                 className={`w-9 h-9 flex items-center justify-center rounded-lg text-[13px] font-bold transition-all ${
-                  page === 1 ? 'bg-purple-50 text-[#8b5cf6]' : 'text-gray-400 hover:bg-gray-50'
+                  page === 1 ? 'bg-purple-50 text-[#7c3aed]' : 'text-gray-400 hover:bg-gray-50'
                 }`}
               >
                 {page}
@@ -302,7 +302,7 @@ export default function Talabalar() {
               <input 
                 type="text"
                 placeholder="+998"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
               />
@@ -313,7 +313,7 @@ export default function Talabalar() {
               <input 
                 type="email"
                 placeholder="Elektron pochtani kiriting"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
               />
@@ -324,7 +324,7 @@ export default function Talabalar() {
               <input 
                 type="text"
                 placeholder="Ma'lumotni kiriting"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
@@ -335,7 +335,7 @@ export default function Talabalar() {
               <input 
                 type="date"
                 placeholder="dd/mm/yyyy"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors appearance-none"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors appearance-none"
                 value={formData.birthDate}
                 onChange={(e) => setFormData({...formData, birthDate: e.target.value})}
               />
@@ -344,7 +344,7 @@ export default function Talabalar() {
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-[#1e293b]">Manzil</label>
               <select 
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors appearance-none cursor-pointer"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors appearance-none cursor-pointer"
                 value={formData.address}
                 onChange={(e) => setFormData({...formData, address: e.target.value})}
               >
@@ -359,7 +359,7 @@ export default function Talabalar() {
               <input 
                 type="password"
                 placeholder="Parolni kiriting"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
               />
@@ -369,7 +369,7 @@ export default function Talabalar() {
               <label className="text-[13px] font-bold text-[#1e293b]">Guruh</label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.group && formData.group.split(',').map((g, i) => g.trim() && (
-                  <span key={i} className="px-2 py-1 bg-purple-50 text-[#8b5cf6] rounded-lg text-[11px] font-bold flex items-center gap-1 uppercase">
+                  <span key={i} className="px-2 py-1 bg-purple-50 text-[#7c3aed] rounded-lg text-[11px] font-bold flex items-center gap-1 uppercase">
                     {g.trim()}
                   </span>
                 ))}
@@ -379,7 +379,7 @@ export default function Talabalar() {
                   setSelectedGroupsForModal(formData.group ? formData.group.split(',').map(g => g.trim()) : []);
                   setIsGroupModalOpen(true);
                 }}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#8b5cf6] font-bold text-[13px] hover:bg-gray-50 transition-colors"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#7c3aed] font-bold text-[13px] hover:bg-gray-50 transition-colors"
               >
                 <Add fontSize="small" />
                 Guruh qo'shish
@@ -389,10 +389,10 @@ export default function Talabalar() {
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-[#1e293b]">Surati</label>
               <div className="w-full p-8 border-2 border-dashed border-gray-100 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition-colors cursor-pointer group">
-                <FileUploadOutlined className="text-gray-300 group-hover:text-[#8b5cf6] transition-colors" sx={{ fontSize: 32 }} />
+                <FileUploadOutlined className="text-gray-300 group-hover:text-[#7c3aed] transition-colors" sx={{ fontSize: 32 }} />
                 <div className="text-center space-y-1">
                   <p className="text-[13px] font-bold">
-                    <span className="text-[#8b5cf6]">Click to upload</span> or drag and drop
+                    <span className="text-[#7c3aed]">Click to upload</span> or drag and drop
                   </p>
                   <p className="text-[11px] text-gray-400">JPG or PNG (max. 2 MB)</p>
                 </div>
@@ -451,7 +451,7 @@ export default function Talabalar() {
                 <input 
                   type="text" 
                   placeholder="Guruh qidirish..." 
-                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
                   value={groupSearch}
                   onChange={(e) => setGroupSearch(e.target.value)}
                 />
@@ -467,7 +467,7 @@ export default function Talabalar() {
                     >
                       <input 
                         type="checkbox" 
-                        className="w-4 h-4 rounded border-gray-300 text-[#8b5cf6] focus:ring-[#8b5cf6]"
+                        className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
                         checked={selectedGroupsForModal.includes(group)}
                         onChange={(e) => {
                           if (e.target.checked) {
@@ -496,7 +496,7 @@ export default function Talabalar() {
                   setFormData({ ...formData, group: selectedGroupsForModal.join(', ') });
                   setIsGroupModalOpen(false);
                 }}
-                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#8b5cf6] transition-all shadow-lg shadow-purple-50"
+                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#7c3aed] transition-all shadow-lg shadow-purple-50"
               >
                 Qo'shish
               </button>
@@ -507,3 +507,4 @@ export default function Talabalar() {
     </div>
   );
 }
+
