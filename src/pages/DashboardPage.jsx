@@ -3,7 +3,6 @@ import Sidebar from './dashboard/Sidebar';
 import Header from './dashboard/Header';
 import Asosiy from './dashboard/Asosiy';
 import Oqituvchilar from './dashboard/Oqituvchilar';
-import Boshqarish from './dashboard/Boshqarish';
 import Kurslar from './dashboard/Kurslar';
 import Xonalar from './dashboard/Xonalar';
 import Talabalar from './dashboard/Talabalar';
@@ -55,7 +54,7 @@ export default function DashboardPage() {
           <div className="p-8 pt-0">
             {activeMenu === 'asosiy' && <Asosiy />}
             {activeMenu === 'oqituvchilar' && <Oqituvchilar />}
-            {activeMenu === 'boshqarish' && <Boshqarish setActiveMenu={setActiveMenu} />}
+            {activeMenu === 'boshqarish' && <Kurslar setActiveMenu={setActiveMenu} />}
             {activeMenu === 'kurslar' && <Kurslar setActiveMenu={setActiveMenu} />}
             {activeMenu === 'xonalar' && <Xonalar setActiveMenu={setActiveMenu} />}
             {activeMenu === 'talabalar' && <Talabalar />}
@@ -105,7 +104,7 @@ export default function DashboardPage() {
                      setActiveMenu(item.id);
                      setIsOthersMenuOpen(false);
                    }}
-                   className="w-full flex items-center gap-4 px-3 py-3 rounded-xl hover:bg-gray-50 text-gray-500 hover:text-[#7c3aed] transition-all group"
+                   className="w-full flex items-center gap-4 px-3 py-3 rounded-xl hover:bg-gray-50 text-gray-500 hover:text-[#6d28d9] transition-all group"
                  >
                    <div className="w-5 h-5 flex items-center justify-center transition-colors">
                      {React.cloneElement(item.icon, { sx: { fontSize: 20 } })}

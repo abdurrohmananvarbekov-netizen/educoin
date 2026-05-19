@@ -33,12 +33,12 @@ export default function Kurslar({ setActiveMenu }) {
     period: '',
     price: '',
     description: '',
-    color: '#7c3aed'
+    color: '#6d28d9'
   });
 
   const colorToBg = {
     '#334155': 'bg-slate-50',
-    '#7c3aed': 'bg-purple-50',
+    '#6d28d9': 'bg-purple-50',
     '#dc2626': 'bg-red-50',
     '#c2410c': 'bg-orange-50',
     '#059669': 'bg-green-50',
@@ -73,7 +73,7 @@ export default function Kurslar({ setActiveMenu }) {
       period: '',
       price: '',
       description: '',
-      color: '#7c3aed'
+      color: '#6d28d9'
     });
   };
 
@@ -84,7 +84,7 @@ export default function Kurslar({ setActiveMenu }) {
   };
 
   const handleEditCourse = (course) => {
-    const hexColor = Object.keys(colorToBg).find(key => colorToBg[key] === course.color) || '#7c3aed';
+    const hexColor = Object.keys(colorToBg).find(key => colorToBg[key] === course.color) || '#6d28d9';
     setNewCourse({
       title: course.title,
       duration: course.duration,
@@ -121,12 +121,12 @@ export default function Kurslar({ setActiveMenu }) {
                 if (tab === 'Xabar yuborish') setActiveMenu('xabar_yuborish');
               }}
               className={`pb-3 text-[13px] font-semibold whitespace-nowrap transition-all relative ${
-                activeTab === tab ? 'text-[#7c3aed]' : 'text-gray-400 hover:text-gray-600'
+                activeTab === tab ? 'text-[#6d28d9]' : 'text-gray-400 hover:text-gray-600'
               }`}
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#7c3aed] rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#6d28d9] rounded-full" />
               )}
             </button>
           ))}
@@ -144,7 +144,7 @@ export default function Kurslar({ setActiveMenu }) {
               e.preventDefault();
               setIsAddDrawerOpen(true);
             }}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm cursor-pointer z-10"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#6d28d9] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm cursor-pointer z-10"
           >
             <Add fontSize="small" />
             Kurslar qo'shish
@@ -157,7 +157,7 @@ export default function Kurslar({ setActiveMenu }) {
             {courses.map((course) => (
               <div 
                 key={course.id} 
-                className={`${course.color} rounded-2xl p-5 border border-white shadow-sm flex flex-col justify-between h-[180px] relative group hover:shadow-md transition-shadow`}
+                className={`${course.color} rounded-2xl p-5 border border-white shadow-sm flex flex-col justify-between h-[150px] relative group hover:shadow-md transition-shadow`}
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -171,7 +171,7 @@ export default function Kurslar({ setActiveMenu }) {
                       </button>
                       <button 
                         onClick={() => handleEditCourse(course)}
-                        className="p-1.5 text-gray-400 hover:text-[#7c3aed] transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-[#6d28d9] transition-colors"
                       >
                         <EditOutlined sx={{ fontSize: 18 }} />
                       </button>
@@ -221,7 +221,7 @@ export default function Kurslar({ setActiveMenu }) {
               onClick={() => {
                 setIsAddDrawerOpen(false);
                 setEditingCourseId(null);
-                setNewCourse({ title: '', duration: '', period: '', price: '', description: '', color: '#7c3aed' });
+                setNewCourse({ title: '', duration: '', period: '', price: '', description: '', color: '#6d28d9' });
               }}
               className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 transition-colors"
             >
@@ -237,7 +237,7 @@ export default function Kurslar({ setActiveMenu }) {
               <input 
                 type="text"
                 placeholder="HR Manager..."
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#6d28d9] transition-colors"
                 value={newCourse.title}
                 onChange={(e) => setNewCourse({...newCourse, title: e.target.value})}
               />
@@ -248,7 +248,7 @@ export default function Kurslar({ setActiveMenu }) {
               <label className="text-[14px] font-bold text-gray-900">Dars davomiyligi</label>
               <div className="relative">
                 <select 
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#7c3aed] transition-colors text-gray-500"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#6d28d9] transition-colors text-gray-500"
                   value={newCourse.duration}
                   onChange={(e) => setNewCourse({...newCourse, duration: e.target.value})}
                 >
@@ -266,7 +266,7 @@ export default function Kurslar({ setActiveMenu }) {
               <label className="text-[14px] font-bold text-gray-900">Kurs davomiyligi (oylarda)</label>
               <div className="relative">
                 <select 
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#7c3aed] transition-colors text-gray-500"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] appearance-none focus:outline-none focus:border-[#6d28d9] transition-colors text-gray-500"
                   value={newCourse.period}
                   onChange={(e) => setNewCourse({...newCourse, period: e.target.value})}
                 >
@@ -288,7 +288,7 @@ export default function Kurslar({ setActiveMenu }) {
                 <input 
                   type="text"
                   placeholder="Narxini kiriting"
-                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors"
+                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#6d28d9] transition-colors"
                   value={newCourse.price}
                   onChange={(e) => setNewCourse({...newCourse, price: e.target.value})}
                 />
@@ -300,7 +300,7 @@ export default function Kurslar({ setActiveMenu }) {
               <label className="text-[14px] font-bold text-gray-900">Description</label>
               <textarea 
                 rows="4"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#7c3aed] transition-colors resize-none"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-[14px] focus:outline-none focus:border-[#6d28d9] transition-colors resize-none"
                 placeholder="A little about the company and the team that you'll be working with."
                 value={newCourse.description}
                 onChange={(e) => setNewCourse({...newCourse, description: e.target.value})}
@@ -320,7 +320,7 @@ export default function Kurslar({ setActiveMenu }) {
                     key={color}
                     onClick={() => setNewCourse({...newCourse, color})}
                     className={`w-8 h-8 rounded-full transition-transform hover:scale-110 ${
-                      newCourse.color === color ? 'ring-2 ring-offset-2 ring-[#7c3aed] scale-110' : ''
+                      newCourse.color === color ? 'ring-2 ring-offset-2 ring-[#6d28d9] scale-110' : ''
                     }`}
                     style={{ backgroundColor: color }}
                   />
@@ -339,7 +339,7 @@ export default function Kurslar({ setActiveMenu }) {
             </button>
             <button 
               onClick={handleSaveCourse}
-              className="flex-1 px-4 py-3 bg-[#7c3aed] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
+              className="flex-1 px-4 py-3 bg-[#6d28d9] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
             >
               Saqlash
             </button>

@@ -205,7 +205,7 @@ export default function Guruhlar() {
         <h1 className="text-2xl font-bold text-gray-900">Guruhlar</h1>
         <button 
           onClick={() => setIsAddDrawerOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#6d28d9] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
         >
           <Add fontSize="small" />
           Guruh qo'shish
@@ -217,7 +217,7 @@ export default function Guruhlar() {
         <button 
           onClick={() => setActiveTab('guruhlar')}
           className={`px-4 py-2 rounded-xl text-[13px] font-bold transition-all flex items-center gap-2 ${
-            activeTab === 'guruhlar' ? 'bg-white text-[#7c3aed] shadow-sm border border-gray-100' : 'text-gray-500 hover:bg-gray-100'
+            activeTab === 'guruhlar' ? 'bg-white text-[#6d28d9] shadow-sm border border-gray-100' : 'text-gray-500 hover:bg-gray-100'
           }`}
         >
           Guruhlar
@@ -225,7 +225,7 @@ export default function Guruhlar() {
         <button 
           onClick={() => setActiveTab('arxiv')}
           className={`px-4 py-2 rounded-xl text-[13px] font-bold transition-all flex items-center gap-2 ${
-            activeTab === 'arxiv' ? 'bg-white text-[#7c3aed] shadow-sm border border-gray-100' : 'text-gray-500 hover:bg-gray-100'
+            activeTab === 'arxiv' ? 'bg-white text-[#6d28d9] shadow-sm border border-gray-100' : 'text-gray-500 hover:bg-gray-100'
           }`}
         >
           <ArchiveOutlined sx={{ fontSize: 18 }} />
@@ -237,7 +237,7 @@ export default function Guruhlar() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-[24px] border border-gray-100 shadow-sm relative overflow-hidden group">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-[#7c3aed]">
+            <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-[#6d28d9]">
               <GroupsOutlined />
             </div>
             <button className="text-gray-300 hover:text-gray-500"><MoreVert fontSize="small" /></button>
@@ -305,8 +305,8 @@ export default function Guruhlar() {
                         checked={group.status} 
                         onChange={() => toggleStatus(group.id)}
                         sx={{
-                          '& .MuiSwitch-switchBase.Mui-checked': { color: '#7c3aed' },
-                          '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#7c3aed' },
+                          '& .MuiSwitch-switchBase.Mui-checked': { color: '#6d28d9' },
+                          '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#6d28d9' },
                         }}
                       />
                       <span className={`text-[10px] font-black uppercase tracking-wider ${group.status ? 'text-green-500' : 'text-gray-400'}`}>
@@ -316,7 +316,7 @@ export default function Guruhlar() {
                   </td>
                   <td className="px-6 py-4 text-[13px] font-black text-gray-900">{group.name}</td>
                   <td className="px-6 py-4">
-                    <span className="px-2.5 py-1 bg-purple-50 text-[#7c3aed] rounded-lg text-[11px] font-bold">
+                    <span className="px-2.5 py-1 bg-purple-50 text-[#6d28d9] rounded-lg text-[11px] font-bold">
                       {group.course}
                     </span>
                   </td>
@@ -379,7 +379,7 @@ export default function Guruhlar() {
               <input 
                 type="text"
                 placeholder="Guruh nomi"
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
@@ -389,7 +389,7 @@ export default function Guruhlar() {
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-[#1e293b]">Kurs <span className="text-red-500">*</span></label>
               <select 
-                className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors appearance-none cursor-pointer ${
+                className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors appearance-none cursor-pointer ${
                   !formData.course ? 'text-gray-400' : 'text-gray-900 font-medium'
                 }`}
                 value={formData.course}
@@ -404,7 +404,7 @@ export default function Guruhlar() {
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-[#1e293b]">Xona <span className="text-red-500">*</span></label>
               <select 
-                className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors appearance-none cursor-pointer ${
+                className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors appearance-none cursor-pointer ${
                   !formData.room ? 'text-gray-400' : 'text-gray-900 font-medium'
                 }`}
                 value={formData.room}
@@ -419,7 +419,7 @@ export default function Guruhlar() {
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-[#1e293b]">Davomiyligi <span className="text-red-500">*</span></label>
               <select 
-                className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors appearance-none cursor-pointer ${
+                className={`w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors appearance-none cursor-pointer ${
                   !formData.duration ? 'text-gray-400' : 'text-gray-900 font-medium'
                 }`}
                 value={formData.duration}
@@ -440,12 +440,12 @@ export default function Guruhlar() {
                   <label 
                     key={day} 
                     className={`flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all ${
-                      formData.days.includes(day) ? 'border-[#7c3aed] bg-purple-50/30' : 'border-gray-100 hover:bg-gray-50'
+                      formData.days.includes(day) ? 'border-[#6d28d9] bg-purple-50/30' : 'border-gray-100 hover:bg-gray-50'
                     }`}
                   >
                     <input 
                       type="checkbox" 
-                      className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
+                      className="w-4 h-4 rounded border-gray-300 text-[#6d28d9] focus:ring-[#6d28d9]"
                       checked={formData.days.includes(day)}
                       onChange={(e) => {
                         if (e.target.checked) {
@@ -470,7 +470,7 @@ export default function Guruhlar() {
                     setIsTimePickerOpen(!isTimePickerOpen);
                     setIsDatePickerOpen(false);
                   }}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] font-medium flex items-center justify-between cursor-pointer hover:border-[#7c3aed] transition-colors"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] font-medium flex items-center justify-between cursor-pointer hover:border-[#6d28d9] transition-colors"
                 >
                   <span className={!formData.time ? 'text-gray-400' : 'text-gray-900'}>
                     {formData.time || 'Vaqtni tanlang'}
@@ -535,7 +535,7 @@ export default function Guruhlar() {
                     setIsDatePickerOpen(!isDatePickerOpen);
                     setIsTimePickerOpen(false);
                   }}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] font-medium flex items-center justify-between cursor-pointer hover:border-[#7c3aed] transition-colors"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] font-medium flex items-center justify-between cursor-pointer hover:border-[#6d28d9] transition-colors"
                 >
                   <span className={!formData.startDate ? 'text-gray-400' : 'text-gray-900'}>
                     {formData.startDate || 'Sanani tanlang'}
@@ -588,7 +588,7 @@ export default function Guruhlar() {
                               handleDateSelect(day);
                             }}
                             className={`h-8 w-8 rounded-lg text-[12px] font-bold transition-all ${
-                              isSelected ? 'bg-[#7c3aed] text-white' : 'text-gray-600 hover:bg-purple-50 hover:text-[#7c3aed]'
+                              isSelected ? 'bg-[#6d28d9] text-white' : 'text-gray-600 hover:bg-purple-50 hover:text-[#6d28d9]'
                             }`}
                           >
                             {day}
@@ -607,7 +607,7 @@ export default function Guruhlar() {
               <textarea 
                 placeholder="Guruh haqida qo'shimcha ma'lumot (ixtiyoriy)"
                 rows={3}
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors resize-none"
+                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors resize-none"
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
               />
@@ -632,7 +632,7 @@ export default function Guruhlar() {
                 ))}
                 <button 
                   onClick={() => setIsTeacherModalOpen(true)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#7c3aed] font-bold text-[13px] hover:bg-gray-50 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#6d28d9] font-bold text-[13px] hover:bg-gray-50 transition-colors"
                 >
                   <Add fontSize="small" />
                   Qo'shish
@@ -659,7 +659,7 @@ export default function Guruhlar() {
                 ))}
                 <button 
                   onClick={() => setIsStudentModalOpen(true)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#7c3aed] font-bold text-[13px] hover:bg-gray-50 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#6d28d9] font-bold text-[13px] hover:bg-gray-50 transition-colors"
                 >
                   <Add fontSize="small" />
                   Qo'shish
@@ -678,7 +678,7 @@ export default function Guruhlar() {
             </button>
             <button 
               onClick={handleSubmit}
-              className="flex-1 px-4 py-3 bg-[#7c3aed] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
+              className="flex-1 px-4 py-3 bg-[#6d28d9] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
             >
               Saqlash
             </button>
@@ -715,7 +715,7 @@ export default function Guruhlar() {
               <input 
                 type="text"
                 placeholder={isStudentModalOpen ? 'Talaba qidirish...' : 'O\'qituvchi qidirish...'}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -730,7 +730,7 @@ export default function Guruhlar() {
                     >
                       <input 
                         type="checkbox" 
-                        className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
+                        className="w-4 h-4 rounded border-gray-300 text-[#6d28d9] focus:ring-[#6d28d9]"
                         checked={formData[isStudentModalOpen ? 'students' : 'teachers'].includes(item.id)}
                         onChange={(e) => {
                           const key = isStudentModalOpen ? 'students' : 'teachers';
@@ -756,7 +756,7 @@ export default function Guruhlar() {
               </button>
               <button 
                 onClick={() => { setIsStudentModalOpen(false); setIsTeacherModalOpen(false); setSearchQuery(''); }}
-                className="px-8 py-2.5 bg-[#7c3aed] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
+                className="px-8 py-2.5 bg-[#6d28d9] text-white rounded-xl text-[14px] font-bold hover:bg-[#6d28d9] transition-colors shadow-lg shadow-purple-100"
               >
                 Saqlash
               </button>

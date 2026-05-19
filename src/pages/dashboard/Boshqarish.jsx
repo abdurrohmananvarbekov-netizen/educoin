@@ -34,7 +34,7 @@ export default function Boshqarish({ setActiveMenu }) {
               if (tab.id === 'xabar') setActiveMenu('xabar_yuborish');
             }}
             className={`pb-3 text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors ${activeBoshqarishTab === tab.id
-                ? 'border-[#7c3aed] text-[#7c3aed]'
+                ? 'border-[#6d28d9] text-[#6d28d9]'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
           >
@@ -48,19 +48,13 @@ export default function Boshqarish({ setActiveMenu }) {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-[18px] font-bold text-gray-900">Kurslar</h2>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#6d28d9] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm">
               <Add fontSize="small" />
               Kurslar qoshish
             </button>
           </div>
 
-          <div className="flex items-center gap-2 mb-6">
-            <div className="flex bg-gray-50 p-1 rounded-xl">
-              <button onClick={() => setActiveCourseBranch('filial_1')} className={`px-4 py-1.5 rounded-lg text-[13px] font-semibold transition-colors ${activeCourseBranch === 'filial_1' ? 'bg-white shadow-sm text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>Filial 1</button>
-              <button onClick={() => setActiveCourseBranch('filial_2')} className={`px-4 py-1.5 rounded-lg text-[13px] font-semibold transition-colors ${activeCourseBranch === 'filial_2' ? 'bg-white shadow-sm text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>Filial 2</button>
-              <button onClick={() => setActiveCourseBranch('arxiv')} className={`px-4 py-1.5 rounded-lg text-[13px] font-semibold transition-colors ${activeCourseBranch === 'arxiv' ? 'bg-white shadow-sm text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>Arxiv</button>
-            </div>
-          </div>
+
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -76,7 +70,7 @@ export default function Boshqarish({ setActiveMenu }) {
                   <h3 className="font-bold text-[14px] text-gray-900 leading-tight pr-4">Human Resources Manager</h3>
                   <div className="flex items-center gap-1.5 shrink-0 text-gray-400">
                     <button className="hover:text-red-500 transition-colors"><DeleteOutlined sx={{ fontSize: 18 }} /></button>
-                    <button className="hover:text-[#7c3aed] transition-colors"><EditOutlined sx={{ fontSize: 18 }} /></button>
+                    <button className="hover:text-[#6d28d9] transition-colors"><EditOutlined sx={{ fontSize: 18 }} /></button>
                   </div>
                 </div>
                 <p className="text-[12px] text-gray-500 leading-relaxed mb-4 line-clamp-2">

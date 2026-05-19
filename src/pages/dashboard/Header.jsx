@@ -40,7 +40,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }) {
             </button>
 
             {/* + Qo'shish Button */}
-            <button className="h-9 px-4 bg-[#6366f1] text-white rounded-lg flex items-center gap-2 text-[14px] font-medium hover:bg-[#4f46e5] transition-colors shadow-sm">
+            <button className="h-9 px-4 bg-[#6d28d9] text-white rounded-lg flex items-center gap-2 text-[14px] font-medium hover:bg-[#6d28d9] transition-colors shadow-sm">
               <Add fontSize="small" />
               Qo'shish
               <KeyboardArrowDown fontSize="small" />
@@ -52,7 +52,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }) {
               <input 
                   type="text" 
                   placeholder="Qidirish..." 
-                  className="w-full pl-9 pr-4 py-2 bg-gray-50/80 border border-gray-100 rounded-lg text-[14px] focus:outline-none focus:border-[#7c3aed] transition-all"
+                  className="w-full pl-9 pr-4 py-2 bg-gray-50/80 border border-gray-100 rounded-lg text-[14px] focus:outline-none focus:border-[#6d28d9] transition-all"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }) {
                       setIsLangOpen(false);
                     }}
                     className={`w-full flex items-center gap-3 px-4 py-2.5 text-[13px] font-bold transition-colors hover:bg-gray-50 ${
-                      selectedLang.id === lang.id ? 'text-[#7c3aed]' : 'text-gray-600'
+                      selectedLang.id === lang.id ? 'text-[#6d28d9]' : 'text-gray-600'
                     }`}
                   >
                     {lang.name}
@@ -103,7 +103,7 @@ export default function Header({ sidebarOpen, setSidebarOpen }) {
             </div>
 
             {/* Avatar */}
-            <div className="w-10 h-10 rounded-full bg-[#7c3aed] flex items-center justify-center text-white font-bold text-lg cursor-pointer shadow-sm">
+            <div className="w-10 h-10 rounded-full bg-[#6d28d9] flex items-center justify-center text-white font-bold text-lg cursor-pointer shadow-sm">
               A
             </div>
           </div>

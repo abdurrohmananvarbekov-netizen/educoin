@@ -198,7 +198,7 @@ export default function Oqituvchilar() {
                             });
                             setIsAddTeacherOpen(true);
                           }}
-                          className="flex items-center gap-2 px-4 py-2.5 bg-[#7c3aed] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
+                          className="flex items-center gap-2 px-4 py-2.5 bg-[#6d28d9] text-white rounded-xl hover:bg-[#6d28d9] font-semibold text-[13px] transition-colors shadow-sm"
                       >
                           <Add fontSize="small" />
                           O'qituvchi qo'shish
@@ -230,12 +230,12 @@ export default function Oqituvchilar() {
                               value={searchQuery}
                               onChange={(e) => setSearchQuery(e.target.value)}
                               placeholder="Qidiruv" 
-                              className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-[13px] font-medium focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all shadow-sm w-[240px]"
+                              className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-[13px] font-medium focus:outline-none focus:border-[#6d28d9] focus:ring-1 focus:ring-[#6d28d9] transition-all shadow-sm w-[240px]"
                           />
                       </div>
                       <button 
                         onClick={() => setShowArchived(!showArchived)}
-                        className={`flex items-center gap-1.5 px-3 py-2 border rounded-xl font-semibold text-[13px] transition-colors shadow-sm ${showArchived ? 'bg-[#7c3aed] border-[#7c3aed] text-white' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                        className={`flex items-center gap-1.5 px-3 py-2 border rounded-xl font-semibold text-[13px] transition-colors shadow-sm ${showArchived ? 'bg-[#6d28d9] border-[#6d28d9] text-white' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                       >
                           {showArchived ? 'Asosiy ro\'yxat' : 'Arxiv'}
                           <Inventory2Outlined fontSize="small" />
@@ -254,7 +254,7 @@ export default function Oqituvchilar() {
                                         type="checkbox" 
                                         checked={allSelected} 
                                         onChange={handleToggleSelectAll} 
-                                        className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]" 
+                                        className="w-4 h-4 rounded border-gray-300 text-[#6d28d9] focus:ring-[#6d28d9]" 
                                       />
                                   </th>
                                   <th className="px-4 py-3 cursor-pointer hover:text-gray-700">
@@ -281,7 +281,7 @@ export default function Oqituvchilar() {
                                               type="checkbox" 
                                               checked={teacher.checked || false}
                                               onChange={() => handleToggleTeacher(teacher.id)}
-                                              className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed] accent-[#7c3aed]" 
+                                              className="w-4 h-4 rounded border-gray-300 text-[#6d28d9] focus:ring-[#6d28d9] accent-[#6d28d9]" 
                                           />
                                       </td>
                                       <td className="px-4 py-3">
@@ -307,7 +307,7 @@ export default function Oqituvchilar() {
                                               <button className="w-7 h-7 flex items-center justify-center hover:bg-gray-100 rounded transition-colors">
                                                   <VisibilityOutlined sx={{ fontSize: 18 }} />
                                               </button>
-                                              <button onClick={() => handleArchiveTeacher(teacher.id)} className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${teacher.isArchived ? 'bg-[#7c3aed] text-white' : 'hover:bg-gray-100'}`} title={teacher.isArchived ? "Arxivdan chiqarish" : "Arxivga olish"}>
+                                              <button onClick={() => handleArchiveTeacher(teacher.id)} className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${teacher.isArchived ? 'bg-[#6d28d9] text-white' : 'hover:bg-gray-100'}`} title={teacher.isArchived ? "Arxivdan chiqarish" : "Arxivga olish"}>
                                                   <Inventory2Outlined sx={{ fontSize: 18 }} />
                                               </button>
                                               <button onClick={() => handleDeleteTeacher(teacher.id)} className="w-7 h-7 flex items-center justify-center hover:bg-red-50 text-gray-500 hover:text-red-500 rounded transition-colors" title="O'chirish">
@@ -368,7 +368,7 @@ export default function Oqituvchilar() {
             {/* Telefon raqam */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Telefon raqam</label>
-              <div className="flex border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#7c3aed] focus-within:ring-1 focus-within:ring-[#7c3aed] transition-all">
+              <div className="flex border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#6d28d9] focus-within:ring-1 focus-within:ring-[#6d28d9] transition-all">
                 <div className="bg-gray-50 px-3 py-2.5 border-r border-gray-200 text-gray-600 font-medium text-[13px] flex items-center justify-center">
                   +998
                 </div>
@@ -393,7 +393,7 @@ export default function Oqituvchilar() {
                   value={newTeacher.email}
                   onChange={(e) => setNewTeacher({...newTeacher, email: e.target.value})}
                   placeholder="Elektron pochtani kiriting" 
-                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all" 
+                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] focus:ring-1 focus:ring-[#6d28d9] transition-all" 
                 />
               </div>
             </div>
@@ -406,7 +406,7 @@ export default function Oqituvchilar() {
                 value={newTeacher.name}
                 onChange={(e) => setNewTeacher({...newTeacher, name: e.target.value})}
                 placeholder="Ma'lumotni kiriting" 
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all" 
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] focus:ring-1 focus:ring-[#6d28d9] transition-all" 
               />
             </div>
 
@@ -421,7 +421,7 @@ export default function Oqituvchilar() {
                   type="date" 
                   value={newTeacher.birthDate}
                   onChange={(e) => setNewTeacher({...newTeacher, birthDate: e.target.value})}
-                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] font-medium text-gray-800 focus:outline-none focus:border-[#7c3aed] focus:ring-1 focus:ring-[#7c3aed] transition-all relative [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer" 
+                  className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[13px] font-medium text-gray-800 focus:outline-none focus:border-[#6d28d9] focus:ring-1 focus:ring-[#6d28d9] transition-all relative [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer" 
                 />
               </div>
             </div>
@@ -431,7 +431,7 @@ export default function Oqituvchilar() {
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Guruh</label>
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {newTeacher.groups.map(g => (
-                  <span key={g} className="flex items-center gap-1 px-2.5 py-1 bg-purple-50 text-[#7c3aed] rounded-lg text-[11px] font-bold uppercase whitespace-nowrap">
+                  <span key={g} className="flex items-center gap-1 px-2.5 py-1 bg-purple-50 text-[#6d28d9] rounded-lg text-[11px] font-bold uppercase whitespace-nowrap">
                     {g} <button type="button" onClick={() => handleRemoveGroup(g)} className="hover:text-red-500 cursor-pointer"><Close sx={{ fontSize: 12 }} /></button>
                   </span>
                 ))}
@@ -442,7 +442,7 @@ export default function Oqituvchilar() {
                   setSelectedGroupsForModal(newTeacher.groups);
                   setIsGroupModalOpen(true);
                 }}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#7c3aed] font-bold text-[13px] hover:bg-gray-50 transition-colors cursor-pointer"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl flex items-center justify-center gap-2 text-[#6d28d9] font-bold text-[13px] hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <Add fontSize="small" />
                 Guruh qo'shish
@@ -459,7 +459,7 @@ export default function Oqituvchilar() {
                     name="gender" 
                     checked={newTeacher.gender === 'Erkak'}
                     onChange={() => setNewTeacher({...newTeacher, gender: 'Erkak'})}
-                    className="w-4 h-4 text-[#7c3aed] focus:ring-[#7c3aed] border-gray-300" 
+                    className="w-4 h-4 text-[#6d28d9] focus:ring-[#6d28d9] border-gray-300" 
                   />
                   <span className="text-[13px] font-medium text-gray-700">Erkak</span>
                 </label>
@@ -469,7 +469,7 @@ export default function Oqituvchilar() {
                     name="gender" 
                     checked={newTeacher.gender === 'Ayol'}
                     onChange={() => setNewTeacher({...newTeacher, gender: 'Ayol'})}
-                    className="w-4 h-4 text-[#7c3aed] focus:ring-[#7c3aed] border-gray-300" 
+                    className="w-4 h-4 text-[#6d28d9] focus:ring-[#6d28d9] border-gray-300" 
                   />
                   <span className="text-[13px] font-medium text-gray-700">Ayol</span>
                 </label>
@@ -479,12 +479,12 @@ export default function Oqituvchilar() {
             {/* Surati */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Surati</label>
-              <div className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#7c3aed] transition-all">
+              <div className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#6d28d9] transition-all">
                 <div className="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-500 mb-3 shadow-sm">
                   <CloudUploadOutlined fontSize="small" />
                 </div>
                 <p className="text-[13px] text-gray-600 mb-1">
-                  <span className="text-[#7c3aed] font-semibold">Click to upload</span> or drag and drop
+                  <span className="text-[#6d28d9] font-semibold">Click to upload</span> or drag and drop
                 </p>
                 <p className="text-[11px] text-gray-400 font-medium">JPG or PNG (max. 800x800px)</p>
               </div>
@@ -492,7 +492,7 @@ export default function Oqituvchilar() {
 
             {/* Parol qo'shish */}
             <div className="flex justify-end pt-1">
-              <button className="text-[13px] font-semibold text-[#7c3aed] flex items-center gap-1 hover:text-[#6d28d9] transition-colors">
+              <button className="text-[13px] font-semibold text-[#6d28d9] flex items-center gap-1 hover:text-[#6d28d9] transition-colors">
                 <Add fontSize="small" /> Parol qoshish
               </button>
             </div>
@@ -508,7 +508,7 @@ export default function Oqituvchilar() {
             </button>
             <button 
               onClick={handleSaveTeacher}
-              className="px-5 py-2.5 bg-[#7c3aed] text-white rounded-xl text-[13px] font-semibold hover:bg-[#6d28d9] transition-colors"
+              className="px-5 py-2.5 bg-[#6d28d9] text-white rounded-xl text-[13px] font-semibold hover:bg-[#6d28d9] transition-colors"
             >
               Saqlash
             </button>
@@ -545,7 +545,7 @@ export default function Oqituvchilar() {
                 <input 
                   type="text" 
                   placeholder="Guruh qidirish..." 
-                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#7c3aed] transition-colors"
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50/50 border border-gray-100 rounded-xl text-[13px] focus:outline-none focus:border-[#6d28d9] transition-colors"
                   value={groupSearch}
                   onChange={(e) => setGroupSearch(e.target.value)}
                 />
@@ -561,7 +561,7 @@ export default function Oqituvchilar() {
                     >
                       <input 
                         type="checkbox" 
-                        className="w-4 h-4 rounded border-gray-300 text-[#7c3aed] focus:ring-[#7c3aed]"
+                        className="w-4 h-4 rounded border-gray-300 text-[#6d28d9] focus:ring-[#6d28d9]"
                         checked={selectedGroupsForModal.includes(group)}
                         onChange={(e) => {
                           if (e.target.checked) {
@@ -590,7 +590,7 @@ export default function Oqituvchilar() {
                   setNewTeacher(prev => ({ ...prev, groups: selectedGroupsForModal }));
                   setIsGroupModalOpen(false);
                 }}
-                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#7c3aed] transition-all shadow-lg shadow-purple-50"
+                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#6d28d9] transition-all shadow-lg shadow-purple-50"
               >
                 Qo'shish
               </button>

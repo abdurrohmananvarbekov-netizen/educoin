@@ -35,7 +35,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
         {/* Sidebar Toggle - Positioned on the border */}
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="absolute right-0 top-6 translate-x-1/2 w-8 h-8 bg-[#7c3aed] rounded-lg flex items-center justify-center text-white hover:bg-[#6d28d9] transition-colors shadow-md z-[60]"
+          className="absolute right-0 top-6 translate-x-1/2 w-8 h-8 bg-[#6d28d9] rounded-lg flex items-center justify-center text-white hover:bg-[#6d28d9] transition-colors shadow-md z-[60]"
         >
           {sidebarOpen ? <ChevronLeft fontSize="small" /> : <ChevronRight fontSize="small" />}
         </button>
@@ -43,11 +43,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
         {/* Logo */}
         <div className="flex items-center h-[72px] px-6 py-4">
           <img 
-            src="/BTC.svg" 
-            alt="Educoin Logo" 
-            className="w-9 h-9 object-contain mr-3 shrink-0 drop-shadow-sm" 
+            src="/najottalim_logo.jpg" 
+            alt="NajotEdu Logo" 
+            className="w-9 h-9 object-contain mr-3 shrink-0 drop-shadow-sm rounded-md" 
           />
-          {sidebarOpen && <span className="text-gray-900 font-bold text-xl tracking-tight">Educoin</span>}
+          {sidebarOpen && <span className="text-gray-900 font-bold text-xl tracking-tight">NajotEdu</span>}
         </div>
 
         {/* Navigation */}
@@ -57,7 +57,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
               key={item.id}
               onClick={() => {
                 if (item.id === 'boshqarish') {
-                  setActiveMenu('boshqarish');
+                  setActiveMenu('kurslar');
                   onOpenOthers();
                 } else {
                   setActiveMenu(item.id);
@@ -69,7 +69,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
                  isOthersMenuOpen && item.id === 'boshqarish' || 
                  item.id === 'boshqarish' && ['kurslar', 'xonalar', 'hodimlar', 'xabar_yuborish'].includes(activeMenu)
                 )
-                  ? 'bg-[#7c3aed] text-white shadow-lg shadow-purple-200' 
+                  ? 'bg-[#6d28d9] text-white shadow-lg shadow-purple-200' 
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
