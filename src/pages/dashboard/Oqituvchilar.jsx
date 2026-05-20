@@ -44,6 +44,7 @@ export default function Oqituvchilar() {
     birthDate: '',
     groups: [],
     gender: 'Erkak',
+    avatar: '',
   });
 
   const availableGroups = ['N26', 'n105'];
@@ -75,6 +76,7 @@ export default function Oqituvchilar() {
       groups: finalGroups,
       phone: `+998${newTeacher.phone}`,
       birthDate: formattedDate,
+      avatar: newTeacher.avatar,
     };
 
     if (editingTeacherId) {
@@ -100,6 +102,7 @@ export default function Oqituvchilar() {
       birthDate: '',
       groups: [],
       gender: 'Erkak',
+      avatar: '',
     });
   };
 
@@ -128,6 +131,7 @@ export default function Oqituvchilar() {
       birthDate: parsedDate,
       groups: teacher.groups || [],
       gender: 'Erkak',
+      avatar: teacher.avatar || '',
     });
     setIsAddTeacherOpen(true);
   };
@@ -286,7 +290,7 @@ export default function Oqituvchilar() {
                                       </td>
                                       <td className="px-4 py-3">
                                           <div className="flex items-center gap-2.5">
-                                              <img src={`https://i.pravatar.cc/150?img=${idx + 10}`} alt="avatar" className="w-7 h-7 rounded-full object-cover" />
+                                              <img src={teacher.avatar || `https://i.pravatar.cc/150?img=${idx + 10}`} alt="avatar" className="w-7 h-7 rounded-full object-cover" />
                                               <span className="font-semibold">{teacher.name}</span>
                                           </div>
                                       </td>
@@ -479,15 +483,40 @@ export default function Oqituvchilar() {
             {/* Surati */}
             <div>
               <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">Surati</label>
-              <div className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#6d28d9] transition-all">
-                <div className="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-500 mb-3 shadow-sm">
-                  <CloudUploadOutlined fontSize="small" />
-                </div>
-                <p className="text-[13px] text-gray-600 mb-1">
-                  <span className="text-[#6d28d9] font-semibold">Click to upload</span> or drag and drop
-                </p>
-                <p className="text-[11px] text-gray-400 font-medium">JPG or PNG (max. 800x800px)</p>
-              </div>
+              <label htmlFor="teacher-avatar-input" className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 hover:border-[#6d28d9] transition-all block relative overflow-hidden">
+                <input 
+                  type="file" 
+                  id="teacher-avatar-input"
+                  accept="image/*"
+                  className="hidden" 
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setNewTeacher(prev => ({ ...prev, avatar: reader.result }));
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                {newTeacher.avatar ? (
+                  <div className="flex flex-col items-center gap-2">
+                    <img src={newTeacher.avatar} alt="Avatar preview" className="w-16 h-16 rounded-full object-cover border-2 border-gray-100 shadow-sm" />
+                    <span className="text-[12px] text-gray-500 font-medium">Rasmni o'zgartirish</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-500 mb-3 shadow-sm mx-auto">
+                      <CloudUploadOutlined fontSize="small" />
+                    </div>
+                    <p className="text-[13px] text-gray-600 mb-1">
+                      <span className="text-[#6d28d9] font-semibold">Click to upload</span> or drag and drop
+                    </p>
+                    <p className="text-[11px] text-gray-400 font-medium">JPG or PNG (max. 800x800px)</p>
+                  </>
+                )}
+              </label>
             </div>
 
             {/* Parol qo'shish */}
@@ -590,7 +619,12 @@ export default function Oqituvchilar() {
                   setNewTeacher(prev => ({ ...prev, groups: selectedGroupsForModal }));
                   setIsGroupModalOpen(false);
                 }}
-                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#6d28d9] transition-all shadow-lg shadow-purple-50"
+                className={`px-6 py-2.5 rounded-xl text-[13px] font-bold transition-all shadow-lg ${
+                  selectedGroupsForModal.length > 0
+                    ? 'bg-[#6d28d9] text-white hover:bg-[#6d28d9] cursor-pointer shadow-purple-100'
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                }`}
+                disabled={selectedGroupsForModal.length === 0}
               >
                 Qo'shish
               </button>

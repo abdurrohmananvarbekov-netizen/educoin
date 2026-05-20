@@ -35,7 +35,8 @@ export default function Talabalar() {
     email: '',
     birthDate: '',
     address: 'Toshkent sh.',
-    password: ''
+    password: '',
+    avatar: ''
   });
 
   const availableGroups = ['N26', 'n105'];
@@ -66,7 +67,9 @@ export default function Talabalar() {
       phone: student.phone,
       email: student.email,
       birthDate: student.birthDate,
-      address: student.address
+      address: student.address,
+      avatar: student.avatar || '',
+      password: ''
     });
     setEditingStudentId(student.id);
     setIsAddDrawerOpen(true);
@@ -96,7 +99,7 @@ export default function Talabalar() {
 
     setIsAddDrawerOpen(false);
     setEditingStudentId(null);
-    setFormData({ name: '', group: '', phone: '+998', email: '', birthDate: '', address: 'Toshkent sh.', password: '' });
+    setFormData({ name: '', group: '', phone: '+998', email: '', birthDate: '', address: 'Toshkent sh.', password: '', avatar: '' });
   };
 
   const toggleSelectAll = (e) => {
@@ -195,9 +198,13 @@ export default function Talabalar() {
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-[#6d28d9] font-bold text-[12px]">
-                        {student.name.charAt(0)}
-                      </div>
+                      {student.avatar ? (
+                        <img src={student.avatar} alt="avatar" className="w-8 h-8 rounded-full object-cover" />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-[#6d28d9] font-bold text-[12px]">
+                          {student.name.charAt(0)}
+                        </div>
+                      )}
                       <span className="text-[13px] font-bold text-gray-700">{student.name}</span>
                     </div>
                   </td>
@@ -388,15 +395,40 @@ export default function Talabalar() {
 
             <div className="space-y-1.5">
               <label className="text-[13px] font-bold text-[#1e293b]">Surati</label>
-              <div className="w-full p-8 border-2 border-dashed border-gray-100 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition-colors cursor-pointer group">
-                <FileUploadOutlined className="text-gray-300 group-hover:text-[#6d28d9] transition-colors" sx={{ fontSize: 32 }} />
-                <div className="text-center space-y-1">
-                  <p className="text-[13px] font-bold">
-                    <span className="text-[#6d28d9]">Click to upload</span> or drag and drop
-                  </p>
-                  <p className="text-[11px] text-gray-400">JPG or PNG (max. 2 MB)</p>
-                </div>
-              </div>
+              <label htmlFor="student-avatar-input" className="w-full p-8 border-2 border-dashed border-gray-100 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition-colors cursor-pointer group block relative overflow-hidden text-center">
+                <input 
+                  type="file" 
+                  id="student-avatar-input"
+                  accept="image/*"
+                  className="hidden" 
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setFormData(prev => ({ ...prev, avatar: reader.result }));
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                {formData.avatar ? (
+                  <div className="flex flex-col items-center gap-2">
+                    <img src={formData.avatar} alt="Avatar preview" className="w-16 h-16 rounded-full object-cover border-2 border-gray-100 shadow-sm" />
+                    <span className="text-[12px] text-gray-500 font-medium">Rasmni o'zgartirish</span>
+                  </div>
+                ) : (
+                  <>
+                    <FileUploadOutlined className="text-gray-300 group-hover:text-[#6d28d9] transition-colors" sx={{ fontSize: 32 }} />
+                    <div className="text-center space-y-1">
+                      <p className="text-[13px] font-bold">
+                        <span className="text-[#6d28d9]">Click to upload</span> or drag and drop
+                      </p>
+                      <p className="text-[11px] text-gray-400">JPG or PNG (max. 2 MB)</p>
+                    </div>
+                  </>
+                )}
+              </label>
             </div>
           </div>
 
@@ -414,7 +446,12 @@ export default function Talabalar() {
             </button>
             <button 
               onClick={handleSaveStudent}
-              className="flex-1 px-4 py-3 bg-gray-100 text-gray-400 rounded-xl text-[14px] font-bold cursor-not-allowed"
+              className={`flex-1 px-4 py-3 rounded-xl text-[14px] font-bold transition-all ${
+                formData.name && formData.phone && formData.phone !== '+998'
+                  ? 'bg-[#6d28d9] text-white hover:bg-[#6d28d9] cursor-pointer'
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              }`}
+              disabled={!formData.name || !formData.phone || formData.phone === '+998'}
             >
               Saqlash
             </button>
@@ -496,7 +533,12 @@ export default function Talabalar() {
                   setFormData({ ...formData, group: selectedGroupsForModal.join(', ') });
                   setIsGroupModalOpen(false);
                 }}
-                className="px-6 py-2.5 bg-[#c4b5fd] text-white rounded-xl text-[13px] font-bold hover:bg-[#6d28d9] transition-all shadow-lg shadow-purple-50"
+                className={`px-6 py-2.5 rounded-xl text-[13px] font-bold transition-all shadow-lg ${
+                  selectedGroupsForModal.length > 0
+                    ? 'bg-[#6d28d9] text-white hover:bg-[#6d28d9] cursor-pointer shadow-purple-100'
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                }`}
+                disabled={selectedGroupsForModal.length === 0}
               >
                 Qo'shish
               </button>

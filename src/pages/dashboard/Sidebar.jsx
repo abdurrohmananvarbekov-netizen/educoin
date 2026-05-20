@@ -27,11 +27,11 @@ const menuData = [
 export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setActiveMenu, onOpenOthers, onCloseOthers, isOthersMenuOpen }) {
   const navigate = useNavigate();
   return (
-      <div 
-        className={`${
-          sidebarOpen ? 'w-[260px]' : 'w-[80px]'
-        } bg-white flex flex-col h-screen transition-all duration-300 relative z-[60] border-r border-gray-100 shadow-[4px_0_24px_rgba(0,0,0,0.02)] shrink-0`}
-      >
+    <div 
+      className={`${
+        sidebarOpen ? 'w-[260px]' : 'w-[80px]'
+      } bg-white flex flex-col h-screen transition-all duration-300 relative z-[60] border-r border-gray-100 shadow-[4px_0_24px_rgba(0,0,0,0.02)] shrink-0 rounded-tr-[20px] rounded-br-[20px]`}
+    >
         {/* Sidebar Toggle - Positioned on the border */}
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -57,17 +57,23 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
               key={item.id}
               onClick={() => {
                 if (item.id === 'boshqarish') {
-                  setActiveMenu('kurslar');
-                  onOpenOthers();
+                  if (isOthersMenuOpen) {
+                    onCloseOthers();
+                  } else {
+                    onOpenOthers();
+                  }
                 } else {
                   setActiveMenu(item.id);
                   onCloseOthers();
                 }
               }}
               className={`w-full flex items-center px-4 py-3 rounded-xl transition-all ${
-                (activeMenu === item.id || 
-                 isOthersMenuOpen && item.id === 'boshqarish' || 
-                 item.id === 'boshqarish' && ['kurslar', 'xonalar', 'hodimlar', 'xabar_yuborish'].includes(activeMenu)
+                (
+                  (isOthersMenuOpen && item.id === 'boshqarish') ||
+                  (!isOthersMenuOpen && (
+                    activeMenu === item.id ||
+                    (item.id === 'boshqarish' && ['kurslar', 'xonalar', 'hodimlar', 'xabar_yuborish'].includes(activeMenu))
+                  ))
                 )
                   ? 'bg-[#6d28d9] text-white shadow-lg shadow-purple-200' 
                   : 'text-gray-600 hover:bg-gray-50'
@@ -78,9 +84,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeMenu, setAc
               </span>
               {sidebarOpen && (
                 <span className={`ml-3 text-[15px] ${
-                  (activeMenu === item.id || 
-                   isOthersMenuOpen && item.id === 'boshqarish' || 
-                   item.id === 'boshqarish' && ['kurslar', 'xonalar', 'hodimlar', 'xabar_yuborish'].includes(activeMenu)
+                  (
+                    (isOthersMenuOpen && item.id === 'boshqarish') ||
+                    (!isOthersMenuOpen && (
+                      activeMenu === item.id ||
+                      (item.id === 'boshqarish' && ['kurslar', 'xonalar', 'hodimlar', 'xabar_yuborish'].includes(activeMenu))
+                    ))
                   )
                     ? 'font-bold' : 'font-medium'
                 }`}>

@@ -11,7 +11,10 @@ import {
   Loop,
   Close,
   AccessTimeOutlined,
-  CalendarMonthOutlined
+  CalendarMonthOutlined,
+  ChevronLeft,
+  BarChart,
+  CheckCircle
 } from '@mui/icons-material';
 import { Switch } from '@mui/material';
 
@@ -26,7 +29,7 @@ const initialGroups = [
     days: 'Du, Se, Chor, Pay, Ju',
     room: 'Autodesk', 
     teacher: 'Mohirbek', 
-    students: 1 
+    students: 5 
   },
   { 
     id: 2, 
@@ -47,6 +50,125 @@ export default function Guruhlar() {
   const [activeTab, setActiveTab] = useState('guruhlar');
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false);
   const [editingGroupId, setEditingGroupId] = useState(null);
+  
+  const [selectedGroupId, setSelectedGroupId] = useState(null);
+  const [detailTab, setDetailTab] = useState('malumotlar');
+  const [isMentorsExpanded, setIsMentorsExpanded] = useState(false);
+  const [isParamsExpanded, setIsParamsExpanded] = useState(false);
+  
+  const [scheduleSessions, setScheduleSessions] = useState([
+    { id: 1, day: 2, month: 'May', passed: true },
+    { id: 2, day: 5, month: 'May', passed: true },
+    { id: 3, day: 7, month: 'May', passed: true },
+    { id: 4, day: 9, month: 'May', passed: true },
+    { id: 5, day: 12, month: 'May', passed: true },
+    { id: 6, day: 14, month: 'May', passed: true },
+    { id: 7, day: 16, month: 'May', passed: true },
+    { id: 8, day: 19, month: 'May', passed: false },
+    { id: 9, day: 21, month: 'May', passed: false },
+    { id: 10, day: 23, month: 'May', passed: false },
+    { id: 11, day: 26, month: 'May', passed: false },
+    { id: 12, day: 28, month: 'May', passed: false },
+    { id: 13, day: 30, month: 'May', passed: false },
+  ]);
+
+  const toggleSessionPassed = (id) => {
+    setScheduleSessions(prev =>
+      prev.map(s => s.id === id ? { ...s, passed: !s.passed } : s)
+    );
+  };
+
+  const [darsliklarTab, setDarsliklarTab] = useState('vazifa');
+  const [isCreateHomeworkOpen, setIsCreateHomeworkOpen] = useState(false);
+  const [newHwTopic, setNewHwTopic] = useState('');
+  const [newHwDesc, setNewHwDesc] = useState('');
+  const [newHwFile, setNewHwFile] = useState(null);
+
+  const [homeworks, setHomeworks] = useState([
+    {
+      id: 1,
+      topic: 'Html asoslari',
+      studentsCount: 5,
+      pendingCount: 0,
+      checkedCount: 0,
+      givenTime: '13 May, 2026 10:00',
+      endTime: '14 May, 2026 06:00',
+      lessonDate: '12 May, 2026'
+    },
+    {
+      id: 2,
+      topic: 'Kirish',
+      studentsCount: 5,
+      pendingCount: 0,
+      checkedCount: 0,
+      givenTime: '13 May, 2026 11:52',
+      endTime: '14 May, 2026 07:52',
+      lessonDate: '9 May, 2026'
+    },
+    {
+      id: 3,
+      topic: 'Nodejs',
+      studentsCount: 5,
+      pendingCount: 0,
+      checkedCount: 3,
+      givenTime: '14 May, 2026 09:47',
+      endTime: '15 May, 2026 05:47',
+      lessonDate: '14 May, 2026'
+    },
+    {
+      id: 4,
+      topic: 'takrorlash',
+      studentsCount: 5,
+      pendingCount: 0,
+      checkedCount: 0,
+      givenTime: '19 May, 2026 16:22',
+      endTime: '20 May, 2026 12:22',
+      lessonDate: '19 May, 2026'
+    }
+  ]);
+
+  const handleCreateHomework = (e) => {
+    e.preventDefault();
+    if (!newHwTopic) return;
+    
+    // Create random or current dates for givenTime/endTime
+    const now = new Date();
+    const formatTime = (date) => {
+      const day = date.getDate();
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${day} ${month}, ${year} ${hours}:${minutes}`;
+    };
+
+    const formatDateOnly = (date) => {
+      const day = date.getDate();
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+      return `${day} ${month}, ${year}`;
+    };
+
+    const newHw = {
+      id: Date.now(),
+      topic: newHwTopic,
+      studentsCount: 5,
+      pendingCount: 0,
+      checkedCount: 0,
+      givenTime: formatTime(now),
+      endTime: formatTime(new Date(now.getTime() + 24 * 60 * 60 * 1000)), // tomorrow
+      lessonDate: formatDateOnly(now)
+    };
+    
+    setHomeworks([newHw, ...homeworks]);
+    setIsCreateHomeworkOpen(false);
+    // Reset form
+    setNewHwTopic('');
+    setNewHwDesc('');
+    setNewHwFile(null);
+  };
   
   const [formData, setFormData] = useState({
     name: '',
@@ -198,6 +320,567 @@ export default function Guruhlar() {
     handleCloseDrawer();
   };
 
+  if (selectedGroupId) {
+    const group = groups.find(g => g.id === selectedGroupId);
+    if (group) {
+      const durationVal = parseFloat(group.duration) || 6.0;
+      const durationFormatted = durationVal.toFixed(1);
+
+      if (isCreateHomeworkOpen) {
+        return (
+          <div className="px-6 py-4 space-y-6">
+            <div className="bg-white border border-slate-100 rounded-[24px] shadow-sm p-6 pb-8 space-y-4">
+              {/* Back Button and Title */}
+              <div className="flex items-center gap-1 select-none">
+                <ChevronLeft 
+                  onClick={() => setIsCreateHomeworkOpen(false)}
+                  className="cursor-pointer text-gray-900 hover:text-[#6d28d9] transition-colors -ml-1"
+                  sx={{ fontSize: 24, stroke: "currentColor", strokeWidth: 1.5 }}
+                />
+                <h1 className="text-[20px] font-bold text-gray-900 leading-none">Yangi uyga vazifa yaratish</h1>
+              </div>
+
+              <form onSubmit={handleCreateHomework} className="space-y-5 pt-1">
+                {/* Topic Select */}
+                <div className="space-y-2">
+                  <label className="text-[13px] font-black text-gray-900 flex items-center gap-1">
+                    <span className="text-red-500">*</span> Mavzu
+                  </label>
+                  <div className="relative">
+                    <select
+                      required
+                      value={newHwTopic}
+                      onChange={(e) => setNewHwTopic(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-[13px] font-bold text-gray-900 focus:outline-none focus:border-[#6d28d9] focus:bg-white transition-all appearance-none cursor-pointer"
+                    >
+                      <option value="" className="text-gray-400">Mavzulardan birini tanlang</option>
+                      <option value="Html asoslari">Html asoslari</option>
+                      <option value="CSS grid va Flexbox">CSS grid va Flexbox</option>
+                      <option value="JavaScript asoslari">JavaScript asoslari</option>
+                      <option value="Nodejs">Nodejs</option>
+                      <option value="React Hooks">React Hooks</option>
+                      <option value="takrorlash">takrorlash</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                      <ChevronLeft sx={{ fontSize: 16, transform: 'rotate(-90deg)' }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description Editor Preview */}
+                <div className="space-y-2">
+                  <label className="text-[13px] font-black text-gray-900 flex items-center gap-1">
+                    <span className="text-red-500">*</span> Izoh
+                  </label>
+                  
+                  {/* Rich text simulator toolbar */}
+                  <div className="border border-gray-200 rounded-2xl overflow-hidden focus-within:border-[#6d28d9] focus-within:ring-1 focus-within:ring-[#6d28d9] transition-all bg-white">
+                    <div className="flex flex-wrap items-center gap-1 p-2 border-b border-gray-100 bg-gray-50/50 text-gray-500 text-[12px] font-bold">
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded">H1</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded">H2</button>
+                      <div className="h-4 w-px bg-gray-200 mx-1" />
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded flex items-center gap-0.5">Sans Serif <ChevronLeft sx={{ fontSize: 10, transform: 'rotate(-90deg)' }} /></button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded flex items-center gap-0.5">Normal <ChevronLeft sx={{ fontSize: 10, transform: 'rotate(-90deg)' }} /></button>
+                      <div className="h-4 w-px bg-gray-200 mx-1" />
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded font-black text-gray-700">B</button>
+                      <button type="button" className="px-2.5 py-1 hover:bg-gray-100 rounded italic text-gray-700">I</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded underline text-gray-700">U</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded line-through text-gray-700">S</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded text-gray-700">”</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded text-gray-700">&lt;&gt;</button>
+                      <div className="h-4 w-px bg-gray-200 mx-1" />
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded">≡</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded">≏</button>
+                      <button type="button" className="px-2 py-1 hover:bg-gray-100 rounded">🔗</button>
+                    </div>
+                    <textarea
+                      required
+                      value={newHwDesc}
+                      onChange={(e) => setNewHwDesc(e.target.value)}
+                      className="w-full px-4 py-3 min-h-[150px] text-[13px] font-medium text-gray-800 placeholder-gray-400 focus:outline-none resize-none"
+                      placeholder="Vazifa haqida batafsil ma'lumot kiriting..."
+                    />
+                  </div>
+                </div>
+
+                {/* File Upload Box */}
+                <div className="space-y-2">
+                  <label className="text-[13px] font-black text-gray-900">Fayl biriktirish</label>
+                  <label className="border-2 border-dashed border-gray-200 hover:border-[#6d28d9] rounded-[20px] bg-gray-50/30 hover:bg-purple-50/5 p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all">
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setNewHwFile(e.target.files[0]);
+                        }
+                      }}
+                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-[#10b981]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span className="text-[13px] font-bold text-gray-600">
+                      {newHwFile ? newHwFile.name : "Faylni tanlash yoki shu yerga tashlang"}
+                    </span>
+                  </label>
+                </div>
+
+                {/* Bottom Actions */}
+                <div className="flex justify-end gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsCreateHomeworkOpen(false)}
+                    className="px-6 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl text-[13px] font-bold transition-colors"
+                  >
+                    Bekor qilish
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-[#10b981] hover:bg-[#059669] text-white rounded-xl text-[13px] font-bold transition-colors shadow-sm"
+                  >
+                    E'lon qilish
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="px-6 py-4 space-y-6">
+          {/* Detail Header */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setSelectedGroupId(null)}
+                className="p-1 hover:bg-gray-150 rounded-lg text-gray-500 hover:text-gray-900 transition-colors flex items-center justify-center"
+              >
+                <ChevronLeft sx={{ fontSize: 24 }} />
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+                Bootcamp Full Stack {group.name}
+                <span className="px-2.5 py-0.5 bg-green-50 text-green-600 rounded-md text-[11px] font-bold capitalize">
+                  {group.status ? 'Aktiv' : 'Nofaol'}
+                </span>
+              </h1>
+            </div>
+            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-bold text-[13px] transition-colors shadow-sm">
+              <BarChart sx={{ fontSize: 18 }} className="text-gray-500" />
+              Statistika
+            </button>
+          </div>
+
+          {/* Detail Tabs */}
+          <div className="border-b border-gray-200">
+            <div className="flex gap-8 -mb-[1px]">
+              {[
+                { id: 'malumotlar', label: "Ma'lumotlar" },
+                { id: 'darsliklar', label: 'Guruh darsliklari' },
+                { id: 'davomat', label: 'Akademik davomati' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setDetailTab(tab.id)}
+                  className={`pb-4 text-[14px] font-bold transition-all relative ${
+                    detailTab === tab.id 
+                      ? 'text-[#6d28d9]' 
+                      : 'text-gray-400 hover:text-gray-600'
+                  }`}
+                >
+                  {tab.label}
+                  {detailTab === tab.id && (
+                    <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#6d28d9] rounded-full" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Tabs Content */}
+          {detailTab === 'malumotlar' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                {/* Guruh mentorlari Card */}
+                <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+                  <div 
+                    onClick={() => setIsMentorsExpanded(!isMentorsExpanded)}
+                    className="bg-[#3b82f6] px-5 py-3.5 flex items-center justify-between text-white font-bold text-[14px] cursor-pointer select-none"
+                  >
+                    <span>Guruh mentorlari</span>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMentorsExpanded(!isMentorsExpanded);
+                      }}
+                      className="p-1 hover:bg-white/10 rounded-lg transition-colors text-white/80 hover:text-white flex items-center justify-center"
+                    >
+                      {isMentorsExpanded ? <Close sx={{ fontSize: 16 }} /> : <Add sx={{ fontSize: 16 }} />}
+                    </button>
+                  </div>
+                  <div className={`transition-all duration-300 overflow-hidden ${isMentorsExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+                    <div className="p-6 flex flex-col items-start gap-4">
+                      <div className="flex flex-col items-center p-4 bg-gray-50/50 rounded-2xl border border-gray-100 w-[140px] text-center">
+                        <img 
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80"
+                          alt={group.teacher} 
+                          className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-sm mb-2"
+                        />
+                        <span className="text-[11px] font-bold text-green-500 mb-1">Teacher</span>
+                        <span className="text-[14px] font-bold text-gray-900">{group.teacher}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Parametrlar Card */}
+                <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+                  <div 
+                    onClick={() => setIsParamsExpanded(!isParamsExpanded)}
+                    className="bg-[#3b82f6] px-5 py-3.5 flex items-center justify-between text-white font-bold text-[14px] cursor-pointer select-none"
+                  >
+                    <span>Parametrlar</span>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsParamsExpanded(!isParamsExpanded);
+                      }}
+                      className="p-1 hover:bg-white/10 rounded-lg transition-colors text-white/80 hover:text-white flex items-center justify-center"
+                    >
+                      {isParamsExpanded ? <Close sx={{ fontSize: 16 }} /> : <Add sx={{ fontSize: 16 }} />}
+                    </button>
+                  </div>
+                  <div className={`transition-all duration-300 overflow-hidden ${isParamsExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+                    <div className="p-6 divide-y divide-gray-100">
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">Kurs:</span>
+                        <span className="text-[13px] font-bold text-gray-900">{group.course}</span>
+                      </div>
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">O'rta yosh:</span>
+                        <span className="text-[13px] font-bold text-gray-900">21</span>
+                      </div>
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">O'quvchilar sig'imi:</span>
+                        <span className="text-[13px] font-bold text-gray-900">20</span>
+                      </div>
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">Mavjud o'quvchilar:</span>
+                        <span className="text-[13px] font-bold text-gray-900">{group.students}</span>
+                      </div>
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">O'quv oyidagi darslar soni:</span>
+                        <span className="text-[13px] font-bold text-gray-900">20</span>
+                      </div>
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">Kurs davomiyligi (oy):</span>
+                        <span className="text-[13px] font-bold text-gray-900">{durationFormatted}</span>
+                      </div>
+                      <div className="flex items-center justify-between py-3">
+                        <span className="text-[13px] font-medium text-gray-500">Jami darslar soni:</span>
+                        <span className="text-[13px] font-bold text-gray-900">20</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dars jadvali Card */}
+              <div className="bg-white border border-slate-100 rounded-[20px] shadow-sm p-6 space-y-6">
+                <h3 className="text-base font-bold text-gray-955">Dars jadvali</h3>
+
+                {/* Schedule Rows */}
+                <div className="space-y-3">
+                  {/* Row 1 */}
+                  <div className="bg-slate-50/50 hover:bg-slate-50/80 border border-slate-100 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 transition-colors">
+                    <div className="w-full md:w-1/5 text-[#3b82f6] hover:underline cursor-pointer font-bold text-[14px]">
+                      {group.teacher}
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-bold text-gray-600">
+                      {group.days ? group.days.replace(/Dushanba/g, 'Du').replace(/Seshanba/g, 'Se').replace(/Chorshanba/g, 'Ch').replace(/Payshanba/g, 'Pa').replace(/Juma/g, 'Ju').replace(/Shanba/g, 'Sh').replace(/, /g, '/') : 'Du/Se/Ch/Pa/Ju'}
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-bold text-gray-600">
+                      {group.time ? `${group.time} dan - ${(parseInt(group.time.split(':')[0]) + 3).toString().padStart(2, '0')}:${group.time.split(':')[1]} gacha` : '09:30 dan - 12:30 gacha'}
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-medium text-gray-400">
+                      15 Yan, 2026 - 27 Iyun, 2026
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-bold text-gray-600 text-right md:text-left">
+                      F2 {group.room} // 18
+                    </div>
+                  </div>
+
+                  {/* Row 2 */}
+                  <div className="bg-slate-50/50 hover:bg-slate-50/80 border border-slate-100 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 transition-colors">
+                    <div className="w-full md:w-1/5 text-[#3b82f6] hover:underline cursor-pointer font-bold text-[14px]">
+                      +++Yusupova Barchinoy
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-bold text-gray-600">
+                      {group.days ? group.days.replace(/Dushanba/g, 'Du').replace(/Seshanba/g, 'Se').replace(/Chorshanba/g, 'Ch').replace(/Payshanba/g, 'Pa').replace(/Juma/g, 'Ju').replace(/Shanba/g, 'Sh').replace(/, /g, '/') : 'Du/Se/Ch/Pa/Ju'}
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-bold text-gray-600">
+                      08:00 dan - 09:30 gacha
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-medium text-gray-400">
+                      15 Yan, 2026 - 27 Iyun, 2026
+                    </div>
+                    <div className="w-full md:w-1/5 text-[13px] font-bold text-gray-600 text-right md:text-left">
+                      F2 {group.room} // 18
+                    </div>
+                  </div>
+                </div>
+
+                {/* Show More Button */}
+                <div className="flex justify-center">
+                  <button className="px-4 py-2 border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl text-[13px] font-bold transition-colors">
+                    Yana ko'rsatish (9)
+                  </button>
+                </div>
+
+                {/* Month Selector */}
+                <div className="flex items-center justify-center gap-4 py-2">
+                  <button className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors">
+                    <ChevronLeft sx={{ fontSize: 16 }} />
+                  </button>
+                  <span className="text-[14px] font-black text-gray-900">1-o'quv oyi</span>
+                  <button className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors">
+                    <ChevronLeft sx={{ fontSize: 16, transform: 'rotate(180deg)' }} />
+                  </button>
+                </div>
+
+                {/* Session Dates Grid */}
+                <div className="grid grid-cols-4 sm:grid-cols-7 md:grid-cols-13 gap-2.5">
+                  {scheduleSessions.map((session) => (
+                    <div 
+                      key={session.id}
+                      onClick={() => toggleSessionPassed(session.id)}
+                      className={`flex flex-col items-center justify-center py-2.5 px-1.5 rounded-xl border text-center cursor-pointer transition-all ${
+                        session.passed 
+                          ? 'bg-[#e2e8f0]/60 border-transparent text-gray-500 hover:bg-[#e2e8f0]/80' 
+                          : 'bg-white border-gray-200 text-gray-800 hover:border-[#6d28d9]/50 hover:bg-purple-50/10'
+                      }`}
+                    >
+                      <span className="text-[10px] uppercase font-bold text-gray-400 mb-0.5">{session.month}</span>
+                      <span className="text-[15px] font-black">{session.day}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* View All Button */}
+                <div className="flex justify-center pt-2">
+                  <button className="px-6 py-2 border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl text-[13px] font-bold transition-colors">
+                    Barchasini ko'rish
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {detailTab === 'darsliklar' && (
+            <div className="space-y-6">
+              {/* Header inside Tab */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+                  <h2 className="text-lg font-bold text-gray-900">Guruh darsliklari</h2>
+                  
+                  {/* Pills Selector */}
+                  <div className="bg-gray-100/60 p-1 rounded-xl flex gap-1 text-[13px] font-bold text-gray-500 w-fit">
+                    {[
+                      { id: 'vazifa', label: 'Uyga vazifa' },
+                      { id: 'videolar', label: 'Videolar' },
+                      { id: 'imtihonlar', label: 'Imtihonlar' },
+                      { id: 'jurnal', label: 'Jurnal' }
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setDarsliklarTab(tab.id)}
+                        className={`px-4 py-1.5 transition-all select-none ${
+                          darsliklarTab === tab.id
+                            ? 'bg-white shadow-sm text-gray-900 rounded-lg'
+                            : 'hover:text-gray-900'
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Add Button */}
+                {darsliklarTab === 'vazifa' && (
+                  <button 
+                    onClick={() => setIsCreateHomeworkOpen(true)}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#10b981] hover:bg-[#059669] text-white rounded-xl font-bold text-[13px] transition-colors shadow-sm w-fit"
+                  >
+                    <Add sx={{ fontSize: 16 }} />
+                    Qo'shish
+                  </button>
+                )}
+              </div>
+
+              {/* Table Container */}
+              {darsliklarTab === 'vazifa' && (
+                <div className="bg-white border border-slate-100 rounded-[24px] shadow-sm overflow-hidden transition-all">
+                  <div className="overflow-x-auto no-scrollbar">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-gray-50/50 border-b border-gray-50">
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider w-16 text-center">#</th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider">Mavzu</th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center w-24">
+                            <div className="flex items-center justify-center">
+                              <PersonOutlined sx={{ fontSize: 18 }} className="text-gray-400" />
+                            </div>
+                          </th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center w-24">
+                            <div className="flex items-center justify-center">
+                              <AccessTimeOutlined sx={{ fontSize: 18 }} className="text-orange-400" />
+                            </div>
+                          </th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center w-24">
+                            <div className="flex items-center justify-center">
+                              <CheckCircle sx={{ fontSize: 18 }} className="text-green-500" />
+                            </div>
+                          </th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider">Berilgan vaqt</th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider">Tugash vaqt</th>
+                          <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider">Dars sanasi</th>
+                          <th className="px-6 py-4 text-right w-12"></th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50">
+                        {homeworks.map((hw, index) => (
+                          <tr key={hw.id} className="hover:bg-gray-50/50 transition-colors">
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-bold text-gray-500 text-center">
+                              {index + 1}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-bold text-gray-900">
+                              {hw.topic}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-bold text-gray-600 text-center">
+                              {hw.studentsCount}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-bold text-gray-600 text-center">
+                              {hw.pendingCount}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-bold text-gray-600 text-center">
+                              {hw.checkedCount}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-medium text-gray-400">
+                              {hw.givenTime}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-medium text-gray-400">
+                              {hw.endTime}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-[13px] font-bold text-gray-600">
+                              {hw.lessonDate}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-gray-400">
+                              <MoreVert className="cursor-pointer hover:text-gray-600 transition-colors" sx={{ fontSize: 18 }} />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* Other Tabs content placeholder */}
+              {darsliklarTab === 'videolar' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {[
+                    { title: 'HTML va CSS asoslari', duration: '25:40', date: '12 May, 2026' },
+                    { title: 'Node.js kirish & Express.js', duration: '40:15', date: '14 May, 2026' },
+                    { title: 'MongoDB & Mongoose integratsiyasi', duration: '35:50', date: '19 May, 2026' }
+                  ].map((video, idx) => (
+                    <div key={idx} className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group cursor-pointer">
+                      <div className="relative aspect-video bg-slate-900 flex items-center justify-center text-white overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/40 to-[#3b82f6]/40 group-hover:scale-105 transition-transform duration-300" />
+                        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:bg-[#3b82f6] group-hover:scale-110 transition-all shadow-lg z-10">
+                          <span className="ml-1 text-white border-y-8 border-y-transparent border-l-[12px] border-l-white" />
+                        </div>
+                        <span className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/60 text-white text-[10px] font-bold rounded">
+                          {video.duration}
+                        </span>
+                      </div>
+                      <div className="p-4 space-y-1">
+                        <h4 className="text-[13px] font-bold text-gray-900 group-hover:text-[#3b82f6] transition-colors">{video.title}</h4>
+                        <p className="text-[11px] text-gray-400 font-medium">{video.date}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {darsliklarTab === 'imtihonlar' && (
+                <div className="bg-white border border-slate-100 rounded-2xl shadow-sm p-6 divide-y divide-gray-100">
+                  {[
+                    { name: 'NodeJS & ExpressJS yozma imtihon', status: 'Yakunlangan', score: '85/100', date: '15 May, 2026' },
+                    { name: 'HTML/CSS responsive UI imtihon', status: 'Yakunlangan', score: '92/100', date: '10 May, 2026' }
+                  ].map((exam, idx) => (
+                    <div key={idx} className="flex items-center justify-between py-4 first:pt-0 last:pb-0">
+                      <div className="space-y-1">
+                        <h4 className="text-[14px] font-bold text-gray-900">{exam.name}</h4>
+                        <p className="text-[11px] text-gray-400 font-medium">Sana: {exam.date}</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="px-2.5 py-0.5 bg-green-50 text-green-600 rounded-md text-[11px] font-bold">
+                          {exam.status}
+                        </span>
+                        <span className="text-[13px] font-bold text-gray-900">{exam.score}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {darsliklarTab === 'jurnal' && (
+                <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-gray-50/50 border-b border-gray-50">
+                        <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider">Talaba ismi</th>
+                        <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center">Dars 1</th>
+                        <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center">Dars 2</th>
+                        <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center">Dars 3</th>
+                        <th className="px-6 py-4 text-[13px] font-black text-gray-400 uppercase tracking-wider text-center">O'rtacha</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50 text-[13px] font-bold text-gray-700">
+                      {[
+                        { name: 'Abdurrohman Anvarbekov', g1: 90, g2: 95, g3: 85 },
+                        { name: 'Davron Rustamov', g1: 85, g2: 88, g3: 90 },
+                        { name: 'Madina Shadiyeva', g1: 92, g2: 90, g3: 94 }
+                      ].map((student, idx) => (
+                        <tr key={idx} className="hover:bg-gray-50/50 transition-colors">
+                          <td className="px-6 py-4 text-gray-900">{student.name}</td>
+                          <td className="px-6 py-4 text-center text-green-600">{student.g1}</td>
+                          <td className="px-6 py-4 text-center text-green-600">{student.g2}</td>
+                          <td className="px-6 py-4 text-center text-green-600">{student.g3}</td>
+                          <td className="px-6 py-4 text-center text-purple-600">
+                            {Math.round((student.g1 + student.g2 + student.g3) / 3)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {detailTab === 'davomat' && (
+            <div className="bg-white p-6 border border-gray-100 rounded-2xl text-center text-gray-400">
+              Akademik davomat ma'lumotlari hozircha mavjud emas.
+            </div>
+          )}
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="px-6 py-4 space-y-6">
       {/* Page Header */}
@@ -314,7 +997,17 @@ export default function Guruhlar() {
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-[13px] font-black text-gray-900">{group.name}</td>
+                  <td 
+                    className="px-6 py-4 text-[13px] font-black text-gray-900 hover:text-[#6d28d9] cursor-pointer hover:underline transition-colors"
+                    onClick={() => {
+                      setSelectedGroupId(group.id);
+                      setDetailTab('malumotlar');
+                      setIsMentorsExpanded(false);
+                      setIsParamsExpanded(false);
+                    }}
+                  >
+                    {group.name}
+                  </td>
                   <td className="px-6 py-4">
                     <span className="px-2.5 py-1 bg-purple-50 text-[#6d28d9] rounded-lg text-[11px] font-bold">
                       {group.course}
